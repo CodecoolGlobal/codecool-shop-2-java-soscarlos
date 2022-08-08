@@ -6,6 +6,7 @@ import com.codecool.shop.dao.SupplierDao;
 import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.dao.implementation.SupplierDaoMem;
+import com.codecool.shop.model.Shop;
 import com.codecool.shop.model.product.Product;
 import com.codecool.shop.model.product.ProductCategory;
 import com.codecool.shop.model.product.Supplier;
@@ -14,6 +15,7 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 import java.math.BigDecimal;
+import java.util.HashSet;
 
 @WebListener
 public class Initializer implements ServletContextListener {
@@ -54,6 +56,13 @@ public class Initializer implements ServletContextListener {
         productDataStore.add(new Product("macbook air", new BigDecimal("1200"), "EUR", "bla bla bla", laptop, mac));
         productDataStore.add(new Product("macbook pro", new BigDecimal("1400"), "EUR", "bla bla bla", laptop, mac));
         productDataStore.add(new Product("macbook no pro", new BigDecimal("900"), "EUR", "bla bla bla", laptop, mac));
+
+        HashSet<ProductCategory> categories = new HashSet<>();
+        categories.add(tablet);
+        categories.add(phone);
+        categories.add(laptop);
+
+//        Shop shop = new Shop(categories);
 
     }
 }
