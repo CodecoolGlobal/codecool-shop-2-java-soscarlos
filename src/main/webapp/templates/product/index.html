@@ -35,9 +35,12 @@
 </div>
 
 <div class="container">
-    <div class="card">
-        <strong th:text="${category.name}">Category Title</strong>
-    </div>
+
+<!--    <div class="card">-->
+<!--        <div th:each="category : ${category}">-->
+<!--            <strong th:text="${category.name}">Category Title</strong>-->
+<!--        </div>-->
+<!--    </div>-->
 
     <div id="products" class="row">
         <div class="col col-sm-12 col-md-6 col-lg-4" th:each="prod,iterStat : ${products}">
@@ -59,7 +62,7 @@
         </div>
     </div>
 
-</div>
+    </div>
 
 <div th:replace="footer.html :: copy"></div>
 
