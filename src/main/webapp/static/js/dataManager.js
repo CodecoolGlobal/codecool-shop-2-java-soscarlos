@@ -1,5 +1,5 @@
 export let dataHandler = {
-    getProductsByCategory: async function (id){
+    getProducts: async function (id){
         return getApi(`/api/category?id=${id}`);
     }
 }
