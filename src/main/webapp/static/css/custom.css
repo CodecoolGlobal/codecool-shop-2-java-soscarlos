@@ -60,3 +60,17 @@
 {
     margin: 0 0 11px;
 }
+
+.drop-down {
+    display: inline-block;
+}
+
+.drop-downs {
+    display: inline-block;
+    margin-right: 50px;
+    margin-bottom: 30px;
+}
+
+select {
+    width: 100%;
+}

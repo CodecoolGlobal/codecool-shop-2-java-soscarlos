@@ -49,13 +49,13 @@ public class Initializer implements ServletContextListener {
         productDataStore.add(new Product("Lenovo IdeaPad Miix 700", new BigDecimal("479"), "USD", "Keyboard cover is included. Fanless Core m5 processor. Full-size USB ports. Adjustable kickstand.", tablet, lenovo));
         productDataStore.add(new Product("Amazon Fire HD 8", new BigDecimal("89"), "USD", "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", tablet, amazon));
 
-        productDataStore.add(new Product("Iphone X", new BigDecimal("1000"), "EUR", "bla bla bla", phone, mac));
-        productDataStore.add(new Product("Iphone 7", new BigDecimal("1000"), "EUR", "bla bla bla", phone, mac));
-        productDataStore.add(new Product("Iphone 11", new BigDecimal("1000"), "EUR", "bla bla bla", phone, mac));
+        productDataStore.add(new Product("iPhone X", new BigDecimal("1000"), "EUR", "The 11th generation of the iPhone. Super Retina Display, TrueDepth Camera System, Face ID and A11 Bionic Chip with Neural Engine.", phone, mac));
+        productDataStore.add(new Product("iPhone 7", new BigDecimal("400"), "EUR", "The 10th generation of iPhone. Water and dust resistance, a new capacitive, static home button, revised antenna bands.", phone, mac));
+        productDataStore.add(new Product("iPhone 11", new BigDecimal("700"), "EUR", "The 13th generation of iPhone. Addition of the more powerful Apple A13 Bionic chip as well as an ultra-wide dual-camera system.", phone, mac));
 
-        productDataStore.add(new Product("macbook air", new BigDecimal("1200"), "EUR", "bla bla bla", laptop, mac));
-        productDataStore.add(new Product("macbook pro", new BigDecimal("1400"), "EUR", "bla bla bla", laptop, mac));
-        productDataStore.add(new Product("macbook no pro", new BigDecimal("900"), "EUR", "bla bla bla", laptop, mac));
+        productDataStore.add(new Product("Macbook Air 2020", new BigDecimal("2000"), "EUR", "A macOS laptop with a 13.30-inch display that has a resolution of 2560x1600 pixels. It is powered by a Core i3 processor and it comes with 8GB of RAM.", laptop, mac));
+        productDataStore.add(new Product("Macbook Pro 2019", new BigDecimal("1400"), "EUR", "The 13-inch MacBook Pro is Apple's best ultraportable laptop, thanks to stylish looks, an excellent touchpad, and long battery life.", laptop, mac));
+        productDataStore.add(new Product("Macbook 2015", new BigDecimal("600"), "EUR", "he 15-inch MacBook Pro has a brilliant Retina Display, powerful processor and new graphics card options, plus faster flash storage.", laptop, mac));
 
         HashSet<ProductCategory> categories = new HashSet<>();
         categories.add(tablet);
