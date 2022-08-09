@@ -38,12 +38,21 @@
 
 <div class="container">
 
-    <div class="card">
+    <div class="drop-down">
+        <div class="drop-downs">
+            <label><strong>Filter by Category</strong></label>
             <select>
                 <option th:each="category : ${categories}" th:id="${category.id}" th:text="${category.name}">
                 </option>
             </select>
-
+        </div>
+        <div class="drop-downs">
+            <label><strong>Filter by Supplier</strong></label>
+            <select>
+                <option th:each="supplier : ${suppliers}" th:id="${supplier.id}" th:text="${supplier.name}">
+                </option>
+            </select>
+        </div>
     </div>
 
     <div id="products" class="row">
