@@ -5,7 +5,12 @@ export let dataHandler = {
 }
 
 async function getApi(url) {
-    await fetch(url)
-        .then(response => response.json())
-        .catch(error => console.log(error));
+    let response = await fetch(url, {
+        method: "GET",
+    });
+    if (response.ok) {
+        return await response.json();
+    } else {
+        console.log("didn't work man/woman");
+    }
 }
