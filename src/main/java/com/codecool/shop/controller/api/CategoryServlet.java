@@ -4,9 +4,12 @@ import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
+import com.codecool.shop.model.dto.ProductDTO;
 import com.codecool.shop.model.product.Product;
-import com.codecool.shop.service.ProductService;
-import com.google.gson.Gson;
+import com.codecool.shop.service.product.ProductDTOService;
+import com.codecool.shop.service.product.ProductService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,19 +23,23 @@ import java.util.List;
 public class CategoryServlet extends javax.servlet.http.HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        ProductDTOService productDTOService = new ProductDTOService();
         String parameter = req.getParameter("id");
-
-
-        Gson gson = new Gson();
 
         ProductDao productDataStore = ProductDaoMem.getInstance();
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
-        ProductService productService = new ProductService(productDataStore,productCategoryDataStore);
+        ProductService productService = new ProductService(productDataStore, productCategoryDataStore);
 
         List<Product> products = productService.getProductsForCategory(Integer.parseInt(parameter));
+        List<ProductDTO> productsDTO = productDTOService.getProducts(products);
 
-        String jsonResponse = gson.toJson(products);
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+
+        String jsonResponse = objectMapper.writeValueAsString(productsDTO);
         System.out.println(jsonResponse);
+
+
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
         PrintWriter out = resp.getWriter();

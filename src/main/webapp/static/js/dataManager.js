@@ -5,10 +5,7 @@ export let dataHandler = {
 }
 
 async function getApi(url) {
-    let response = await fetch(url, {
-        method: "GET",
-    });
-    if (response.ok) {
-        return await response.json();
-    }
+    await fetch(url)
+        .then(response => response.json())
+        .catch(error => console.log(error));
 }
