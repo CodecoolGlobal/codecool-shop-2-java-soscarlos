@@ -99,3 +99,7 @@ select {
 .cart a {
     color: black;
 }
+
+body {
+    background: cadetblue;
+}
