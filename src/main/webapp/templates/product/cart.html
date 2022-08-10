@@ -53,14 +53,14 @@
                                         </div>
                                         <hr class="my-4">
 
-                                        <div class="row mb-4 d-flex justify-content-between align-items-center">
+                                        <div class="row mb-4 d-flex justify-content-between align-items-center" th:each="prod,iterStat : ${products}">
                                             <div class="col-md-2 col-lg-2 col-xl-2">
                                                 <img src="#"
                                                      class="img-fluid rounded-3">
                                             </div>
                                             <div class="col-md-3 col-lg-3 col-xl-3">
-                                                <h6 class="text-muted">{{ Category }}</h6>
-                                                <h6 class="text-black mb-0">{{ Product }}</h6>
+                                                <h6 class="text-muted" th:text="${prod.productCategory}">{{ Category }}</h6>
+                                                <h6 class="text-black mb-0" th:text="${prod.name}">{{ Product }}</h6>
                                             </div>
                                             <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
                                                 <button class="btn btn-link px-2"
@@ -77,7 +77,7 @@
                                                 </button>
                                             </div>
                                             <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                                                <h6 class="mb-0">EUR {{ }}</h6>
+                                                <h6 class="mb-0" th:text="'EUR ' + ${prod.defaultPrice}">EUR {{ }}</h6>
                                             </div>
                                             <div class="col-md-1 col-lg-1 col-xl-1 text-end">
                                                 <a href="#!" class="text-muted"><i class="fas fa-times"></i></a>
