@@ -11,7 +11,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @WebServlet(urlPatterns = {"/cart"})
 public class CartServlet extends javax.servlet.http.HttpServlet {
@@ -19,6 +21,11 @@ public class CartServlet extends javax.servlet.http.HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         CartDao cartDao = CartDao.getInstance();
         List<ProductDTO> productsInCart = cartDao.getProductsDTO();
+        Map<ProductDTO, Integer> productsInCartMap = new HashMap<>();
+        for (ProductDTO product : productsInCart) {
+            productsInCartMap.keySet().forEach(key -> {
+            });
+        }
 
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
