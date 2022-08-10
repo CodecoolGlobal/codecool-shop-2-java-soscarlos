@@ -2,8 +2,10 @@ package com.codecool.shop.controller.api;
 
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
+import com.codecool.shop.dao.SupplierDao;
 import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
+import com.codecool.shop.dao.implementation.SupplierDaoMem;
 import com.codecool.shop.model.dto.ProductDTO;
 import com.codecool.shop.model.product.Product;
 import com.codecool.shop.service.product.ProductDTOService;
@@ -19,18 +21,24 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
-@WebServlet(urlPatterns = {"/api/category"})
-public class CategoryServlet extends javax.servlet.http.HttpServlet {
+@WebServlet(urlPatterns = {"/api/products/category"})
+public abstract class CategoryServlet extends javax.servlet.http.HttpServlet {
+    protected List<Product> productsList;
+    private ProductService productService;
+    private String parameter;
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ProductDTOService productDTOService = new ProductDTOService();
-        String parameter = req.getParameter("id");
+        parameter = req.getParameter("id");
 
         ProductDao productDataStore = ProductDaoMem.getInstance();
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
-        ProductService productService = new ProductService(productDataStore, productCategoryDataStore);
+        SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
+        productService = new ProductService(productDataStore, productCategoryDataStore, supplierDataStore);
 
-        List<Product> products = productService.getProductsForCategory(Integer.parseInt(parameter));
+        setProductsList(productService, parameter);
+        List<Product> products = getProductsList();
         List<ProductDTO> productsDTO = productDTOService.getProducts(products);
 
         ObjectMapper objectMapper = new ObjectMapper();
@@ -45,5 +53,21 @@ public class CategoryServlet extends javax.servlet.http.HttpServlet {
         PrintWriter out = resp.getWriter();
         out.print(jsonResponse);
         out.flush();
+    }
+
+    public String getParameter() {
+        return parameter;
+    }
+
+    public ProductService getProductService() {
+        return productService;
+    }
+
+    public List<Product> getProductsList() {
+        return productsList;
+    }
+
+    public void setProductsList(ProductService productService, String parameter) {
+        this.productsList = productService.getProductsByCategory(Integer.parseInt(parameter));
     }
 }

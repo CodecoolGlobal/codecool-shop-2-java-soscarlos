@@ -9,7 +9,7 @@ export let productManager = {
             options.forEach(option => {
                 if (option.text === this.value) {
                     let id = option.id;
-                    let data = productManager.getProducts(id);
+                    let data = productManager.getProductsByCategory(id);
                     data.then(product => console.log(product)); //TODO: Pass to HTMLFactory
                 }
             })
@@ -21,15 +21,20 @@ export let productManager = {
             options.forEach(option => {
                 if (option.text === this.value) {
                     let id = option.id;
-                    let data = productManager.getProducts(id);
+                    let data = productManager.getProductsBySupplier(id);
                     data.then(product => console.log(product)); //TODO: Pass to HTMLFactory
                 }
             })
         })
     },
 
-    async getProducts(id) {
-        let data = await dataHandler.getProducts(1);
+    async getProductsByCategory(id) {
+        let data = await dataHandler.getProductsByCategory(id);
+        return data;
+    },
+
+    async getProductsBySupplier(id) {
+        let data = await dataHandler.getProductsBySupplier(id);
         return data;
     }
 }
