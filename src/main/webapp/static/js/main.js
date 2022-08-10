@@ -10,11 +10,10 @@ async function init() {
 }
 
 document.querySelectorAll(".btn").forEach(button => {
-    button.addEventListener('click', increaseCartItemNumber)
-    function increaseCartItemNumber() {
+    button.addEventListener('click', () => {
         let cart = document.getElementById("cart-count");
         let number = parseInt(cart.textContent, 10) + 1;
         cart.textContent = number.toString();
-    }
+    })
 })
 
