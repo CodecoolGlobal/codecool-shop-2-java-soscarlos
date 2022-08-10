@@ -19,4 +19,8 @@ public class ProductDTOService {
                 .map(mapper::toDto)
                 .collect(Collectors.toList());
     }
+    public ProductDTO getProduct(Product product){
+        return mapper.toDto(product);
+    }
+
 }
