@@ -3,7 +3,7 @@ import {dataHandler} from "./dataManager.js";
 const productsContainer = document.getElementById("products");
 const productCounter = document.getElementById("cart-count");
 
-export async function loadButtons(){
+export function loadButtons(){
     let cardContainers = productsContainer.children;
 
     for (const cardContainer of cardContainers) {

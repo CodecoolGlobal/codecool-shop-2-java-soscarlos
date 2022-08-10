@@ -3,18 +3,24 @@ package com.codecool.shop.model.dto;
 import java.util.List;
 
 public class ProductDTO {
+    private final String id;
     private String name;
     private String defaultPrice;
     private String description;
     private String productCategory;
     private String supplier;
 
-    public ProductDTO(String name, String defaultPrice, String description, String productCategory, String supplier) {
+    public ProductDTO(String id, String name, String defaultPrice, String description, String productCategory, String supplier) {
+        this.id = id;
         this.name = name;
         this.defaultPrice = defaultPrice;
         this.description = description;
         this.productCategory = productCategory;
         this.supplier = supplier;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getName() {

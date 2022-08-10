@@ -1,4 +1,8 @@
 import {dataHandler} from "./dataManager.js";
+import {cardBuilder} from "./htmlFactory.js";
+import {loadButtons} from "./cartManager.js";
+
+const productsContainer = document.getElementById("products");
 
 export let productManager = {
 
@@ -10,7 +14,7 @@ export let productManager = {
                 if (option.text === this.value) {
                     let id = option.id;
                     let data = productManager.getProductsByCategory(id);
-                    data.then(product => console.log(product)); //TODO: Pass to HTMLFactory
+                    data.then(products => fillProducts(products));
                 }
             })
         });
@@ -22,7 +26,7 @@ export let productManager = {
                 if (option.text === this.value) {
                     let id = option.id;
                     let data = productManager.getProductsBySupplier(id);
-                    data.then(product => console.log(product)); //TODO: Pass to HTMLFactory
+                    data.then(products => fillProducts(products));
                 }
             })
         })
@@ -37,4 +41,13 @@ export let productManager = {
         let data = await dataHandler.getProductsBySupplier(id);
         return data;
     }
+}
+
+function fillProducts(products){
+    productsContainer.innerHTML = "";
+    for (const product of products) {
+        let card = cardBuilder(product);
+        productsContainer.insertAdjacentHTML("beforeend", card);
+    }
+    loadButtons();
 }

@@ -23,29 +23,15 @@ import java.util.List;
 
 @WebServlet(urlPatterns = {"/api/products/category"})
 public class CategoryServlet extends javax.servlet.http.HttpServlet {
+    private final ServletService service = new ServletService();
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        ProductDTOService productDTOService = new ProductDTOService();
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String parameter = req.getParameter("id");
-
-        ProductDao productDataStore = ProductDaoMem.getInstance();
-        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
-        SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
-        ProductService productService = new ProductService(productDataStore, productCategoryDataStore, supplierDataStore);
-
+        ProductService productService = service.getProductService();
         List<Product> products = productService.getProductsByCategory(Integer.parseInt(parameter));
-        List<ProductDTO> productsDTO = productDTOService.getProducts(products);
+        List<ProductDTO> productsDTO = service.getProductsDto(products);
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+        service.sendJsonResponse(productsDTO, resp);
 
-        String jsonResponse = objectMapper.writeValueAsString(productsDTO);
-
-
-        resp.setContentType("application/json");
-        resp.setCharacterEncoding("UTF-8");
-        PrintWriter out = resp.getWriter();
-        out.print(jsonResponse);
-        out.flush();
     }
 }
