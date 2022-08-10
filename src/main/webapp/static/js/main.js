@@ -9,3 +9,12 @@ async function init() {
     console.log(data);
 }
 
+document.querySelectorAll(".btn").forEach(button => {
+    button.addEventListener('click', increaseCartItemNumber)
+    function increaseCartItemNumber() {
+        let cart = document.getElementById("cart-count");
+        let number = parseInt(cart.textContent, 10) + 1;
+        cart.textContent = number.toString();
+    }
+})
+
