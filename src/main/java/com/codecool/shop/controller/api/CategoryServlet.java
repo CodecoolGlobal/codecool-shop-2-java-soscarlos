@@ -22,30 +22,24 @@ import java.io.PrintWriter;
 import java.util.List;
 
 @WebServlet(urlPatterns = {"/api/products/category"})
-public abstract class CategoryServlet extends javax.servlet.http.HttpServlet {
-    protected List<Product> productsList;
-    private ProductService productService;
-    private String parameter;
-
+public class CategoryServlet extends javax.servlet.http.HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ProductDTOService productDTOService = new ProductDTOService();
-        parameter = req.getParameter("id");
+        String parameter = req.getParameter("id");
 
         ProductDao productDataStore = ProductDaoMem.getInstance();
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
         SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
-        productService = new ProductService(productDataStore, productCategoryDataStore, supplierDataStore);
+        ProductService productService = new ProductService(productDataStore, productCategoryDataStore, supplierDataStore);
 
-        setProductsList(productService, parameter);
-        List<Product> products = getProductsList();
+        List<Product> products = productService.getProductsByCategory(Integer.parseInt(parameter));
         List<ProductDTO> productsDTO = productDTOService.getProducts(products);
 
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
 
         String jsonResponse = objectMapper.writeValueAsString(productsDTO);
-        System.out.println(jsonResponse);
 
 
         resp.setContentType("application/json");
@@ -53,21 +47,5 @@ public abstract class CategoryServlet extends javax.servlet.http.HttpServlet {
         PrintWriter out = resp.getWriter();
         out.print(jsonResponse);
         out.flush();
-    }
-
-    public String getParameter() {
-        return parameter;
-    }
-
-    public ProductService getProductService() {
-        return productService;
-    }
-
-    public List<Product> getProductsList() {
-        return productsList;
-    }
-
-    public void setProductsList(ProductService productService, String parameter) {
-        this.productsList = productService.getProductsByCategory(Integer.parseInt(parameter));
     }
 }
