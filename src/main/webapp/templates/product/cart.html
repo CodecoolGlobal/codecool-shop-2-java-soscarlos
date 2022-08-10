@@ -27,9 +27,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
     <!-- End of Bootstrap components -->
 
-    <link rel="stylesheet" type="text/css" href="/static/css/custom.css" />
+    <!--    <link rel="stylesheet" type="text/css" href="/static/css/custom.css" />-->
 
-    <script src="/static/js/main.js" type="module"></script>
+    <script src="/static/js/checkout.js" type="module"></script>
 </head>
 
 <body>
@@ -98,6 +98,9 @@
                                             <h5 class="text-uppercase">Total price</h5>
                                             <h5>EUR {{ }}</h5>
                                         </div>
+                                        <button type="button" class="btn btn-dark btn-block btn-lg" id="checkout"
+                                                data-mdb-ripple-color="dark">Checkout</button>
+                                        <div id="checkout-form"></div>
                                     </div>
                                 </div>
                             </div>
