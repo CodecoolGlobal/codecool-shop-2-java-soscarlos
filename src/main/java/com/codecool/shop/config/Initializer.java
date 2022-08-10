@@ -45,9 +45,9 @@ public class Initializer implements ServletContextListener {
         productCategoryDataStore.add(laptop);
 
         //setting up products and printing it
-        productDataStore.add(new Product("Amazon Fire", new BigDecimal("49.9"), "USD", "Fantastic price. Large content ecosystem. Good parental controls. Helpful technical support.", tablet, amazon));
-        productDataStore.add(new Product("Lenovo IdeaPad Miix 700", new BigDecimal("479"), "USD", "Keyboard cover is included. Fanless Core m5 processor. Full-size USB ports. Adjustable kickstand.", tablet, lenovo));
-        productDataStore.add(new Product("Amazon Fire HD 8", new BigDecimal("89"), "USD", "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", tablet, amazon));
+        productDataStore.add(new Product("Amazon Fire", new BigDecimal("49.9"), "EUR", "Fantastic price. Large content ecosystem. Good parental controls. Helpful technical support.", tablet, amazon));
+        productDataStore.add(new Product("Lenovo IdeaPad Miix 700", new BigDecimal("479"), "EUR", "Keyboard cover is included. Fanless Core m5 processor. Full-size USB ports. Adjustable kickstand.", tablet, lenovo));
+        productDataStore.add(new Product("Amazon Fire HD 8", new BigDecimal("89"), "EUR", "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", tablet, amazon));
 
         productDataStore.add(new Product("iPhone X", new BigDecimal("1000"), "EUR", "The 11th generation of the iPhone. Super Retina Display, TrueDepth Camera System, Face ID and A11 Bionic Chip with Neural Engine.", phone, mac));
         productDataStore.add(new Product("iPhone 7", new BigDecimal("400"), "EUR", "The 10th generation of iPhone. Water and dust resistance, a new capacitive, static home button, revised antenna bands.", phone, mac));
