@@ -33,13 +33,11 @@ export let productManager = {
     },
 
     async getProductsByCategory(id) {
-        let data = await dataHandler.getProductsByCategory(id);
-        return data;
+        return await dataHandler.getProductsByCategory(id);
     },
 
     async getProductsBySupplier(id) {
-        let data = await dataHandler.getProductsBySupplier(id);
-        return data;
+        return await dataHandler.getProductsBySupplier(id);
     }
 }
 
