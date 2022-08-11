@@ -41,7 +41,7 @@
 <div class="container">
     <div class="cart">
         <a href="/cart" id="cart"><i class="bi bi-cart-fill"></i></a>
-        <span class='badge badge-warning' id='cart-count'>0</span>
+        <span class='badge badge-warning' id='cart-count' th:text="${cartProducts.size()}" >0</span>
     </div>
 
     <div class="drop-down">
