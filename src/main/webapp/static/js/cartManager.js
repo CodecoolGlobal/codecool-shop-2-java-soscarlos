@@ -2,6 +2,7 @@ import {dataHandler} from "./dataManager.js";
 
 const productsContainer = document.getElementById("products");
 const productCounter = document.getElementById("cart-count");
+const shopCartContainer = document.getElementById("cart-content");
 
 export function loadButtons(){
     let cardContainers = productsContainer.children;
@@ -18,4 +19,10 @@ export function loadButtons(){
             console.log(response.length);
         });
     }
+}
+
+function fillShopCart(products) {
+    shopCartContainer.innerHTML = "";
+
+    products.reduce((product, number) => product + number, 0)
 }
