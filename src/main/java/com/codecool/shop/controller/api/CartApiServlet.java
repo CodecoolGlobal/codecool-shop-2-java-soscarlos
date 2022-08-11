@@ -28,15 +28,21 @@ public class CartApiServlet extends javax.servlet.http.HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String parameter = request.getParameter("id");
-
+        Product productForCart;
         ProductService productService = service.getProductService();
-        Product productForCart = productService.getProductById(Integer.parseInt(parameter));
-        ProductDTO productDTO = service.getProductDto(productForCart);
-
         CartDao cartDao = CartDao.getInstance();
-        cartDao.addToCart(productDTO);
 
-        List<ProductDTO> productsDTO = cartDao.getProductsDTO();
-        service.sendJsonResponse(productsDTO, response);
+        if (parameter == null) {
+            List<ProductDTO> productsDTO = cartDao.getProductsDTO();
+            service.sendJsonResponse(productsDTO, response);
+        } else {
+            productForCart = productService.getProductById(Integer.parseInt(parameter));
+            ProductDTO productDTO = service.getProductDto(productForCart);
+
+            cartDao.addToCart(productDTO);
+
+            List<ProductDTO> productsDTO = cartDao.getProductsDTO();
+            service.sendJsonResponse(productsDTO, response);
+        }
     }
 }

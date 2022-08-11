@@ -18,7 +18,7 @@ export function cardBuilder(product) {
         </div>`
 }
 
-export function shopCartBuilder(product, amount) {
+export function shopCartBuilder(product) {
     return `<div class="row mb-4 d-flex justify-content-between align-items-center">
                 <div class="col-md-2 col-lg-2 col-xl-2">
                     <img src="#"
@@ -34,7 +34,7 @@ export function shopCartBuilder(product, amount) {
                         <i class="fas fa-minus"></i>
                     </button>
 
-                    <input id="form1" min="0" name="quantity" value="${amount}" type="number"
+                    <input id="form1" min="0" name="quantity" value="${product.count}" type="number"
                            class="form-control form-control-sm" />
 
                     <button class="btn btn-link px-2"

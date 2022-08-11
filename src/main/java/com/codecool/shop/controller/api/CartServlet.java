@@ -21,15 +21,10 @@ public class CartServlet extends javax.servlet.http.HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         CartDao cartDao = CartDao.getInstance();
         List<ProductDTO> productsInCart = cartDao.getProductsDTO();
-        Map<ProductDTO, Integer> productsInCartMap = new HashMap<>();
-        for (ProductDTO product : productsInCart) {
-            productsInCartMap.keySet().forEach(key -> {
-            });
-        }
 
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
-        context.setVariable("products", productsInCart);
+        context.setVariable("cartProducts", productsInCart);
 
         engine.process("product/cart.html", context, resp.getWriter());
     }

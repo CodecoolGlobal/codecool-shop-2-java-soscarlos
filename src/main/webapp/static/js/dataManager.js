@@ -10,6 +10,9 @@ export let dataHandler = {
 
     getIdProduct: async function (id){
         return getApi(`/api/cart?id=${id}`);
+    },
+    getProducts: async function (){
+        return getApi(`/api/cart`);
     }
 }
 
