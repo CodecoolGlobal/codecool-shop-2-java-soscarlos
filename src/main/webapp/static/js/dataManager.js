@@ -8,8 +8,11 @@ export let dataHandler = {
         return getApi(`/api/products/supplier?id=${id}`);
     },
 
-    getIdProduct: async function (id){
-        return getApi(`/api/cart?id=${id}`);
+    addProduct: async function (id){
+        return getApi(`/api/cart?addId=${id}`);
+    },
+    removeProduct: async function (id){
+        return getApi(`/api/cart?removeId=${id}`);
     },
     getProducts: async function (){
         return getApi(`/api/cart`);

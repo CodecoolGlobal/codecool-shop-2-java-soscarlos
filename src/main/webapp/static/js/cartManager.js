@@ -5,6 +5,7 @@ const productsContainer = document.getElementById("products");
 const productCounter = document.getElementById("cart-count");
 const shopCartContainer = document.getElementById("cart-content");
 const totalPriceElement = document.getElementById("total-price");
+const cartSizeElement = document.getElementById("cart-size");
 
 export function loadButtons() {
     let cardContainers = productsContainer.children;
@@ -16,7 +17,7 @@ export function loadButtons() {
 
         cardButton.addEventListener("click", async function (evt) {
             let productId = evt.target.id;
-            let productsInCart = await dataHandler.getIdProduct(productId);
+            let productsInCart = await dataHandler.addProduct(productId);
             productCounter.innerText = productsInCart.length;
         });
     }
@@ -25,29 +26,54 @@ export function loadButtons() {
 export async function fillShoppingCard() {
     let products = await dataHandler.getProducts();
     let totalPrice = 0;
-    let productsReduced = Object.values(products.reduce(
+    let productsReduced = getReducedProducts(products);
+
+    for (const product of productsReduced) {
+        let shoppingCard = shopCartBuilder(product);
+        shopCartContainer.insertAdjacentHTML("beforeend", shoppingCard);
+
+        let inputTag = document.getElementById(`form${product.id}`);
+
+        inputTag.addEventListener("input", async (evt) => changeCartStatus(evt, product));
+        totalPrice += product.totalPrice;
+    }
+    totalPriceElement.innerText = "EUR " + totalPrice.toString();
+}
+
+function getReducedProducts(products) {
+    return Object.values(products.reduce(
         (r, {id, name, description, productCategory, supplier, defaultPrice}) => {
             r[name] ??= {id, name, description, productCategory, supplier, defaultPrice, count: 0, totalPrice: 0};
             r[name].count++;
             r[name].totalPrice = defaultPrice * r[name].count;
             return r;
         }, {}));
+}
 
-    for (const product of productsReduced) {
-        let shoppingCard = shopCartBuilder(product);
-        shopCartContainer.insertAdjacentHTML("beforeend", shoppingCard);
+async function changeCartStatus(evt, product){
+    let inputValue = evt.target.value;
+    let id = product.id;
+    let newTotalPrice = 0;
+    if (inputValue > product.count) {
+        product.count += inputValue - product.count;
 
-        let buttonUp = document.getElementById(`up-button${product.id}`);
-        let buttonDown = document.getElementById(`down-button${product.id}`);
+        let productsInCartPlus = await dataHandler.addProduct(id);
+        let increasedProducts = getReducedProducts(productsInCartPlus);
+        for (const increasedProduct of increasedProducts) {
+            newTotalPrice += increasedProduct.totalPrice;
+        }
+        cartSizeElement.innerText = productsInCartPlus.length.toString() + " Items";
+        totalPriceElement.innerText = "EUR " + newTotalPrice.toString();
 
-        buttonUp.addEventListener("click", function (evt) {
-            console.log(evt.target.id);
-        });
-        buttonDown.addEventListener("click", function (evt) {
-            console.log(evt.target.id);
-        });
-        totalPrice += product.totalPrice;
+    } else if (inputValue < product.count) {
+        product.count -= product.count - inputValue;
+
+        let productsInCartMinus = await dataHandler.removeProduct(id);
+        let decreasedProducts = getReducedProducts(productsInCartMinus);
+        for (const decreasedProduct of decreasedProducts) {
+            newTotalPrice += decreasedProduct.totalPrice;
+        }
+        cartSizeElement.innerText = productsInCartMinus.length.toString() + " Items";
+        totalPriceElement.innerText = "EUR " + newTotalPrice.toString();
     }
-    totalPriceElement.innerText = "EUR " + totalPrice.toString();
-
 }

@@ -34,7 +34,7 @@ export function shopCartBuilder(product) {
                         <i class="fas fa-minus"></i>
                     </button>
 
-                    <input id="form1" min="0" name="quantity" value="${product.count}" type="number"
+                    <input id="form${product.id}" min="0" name="quantity" value="${product.count}" type="number"
                            class="form-control form-control-sm" />
 
                     <button id="up-button${product.id}" class="btn btn-link px-2"
