@@ -36,6 +36,16 @@ export async function fillShoppingCard() {
     for (const product of productsReduced) {
         let shoppingCard = shopCartBuilder(product);
         shopCartContainer.insertAdjacentHTML("beforeend", shoppingCard);
+
+        let buttonUp = document.getElementById(`up-button${product.id}`);
+        let buttonDown = document.getElementById(`down-button${product.id}`);
+
+        buttonUp.addEventListener("click", function (evt) {
+            console.log(evt.target.id);
+        });
+        buttonDown.addEventListener("click", function (evt) {
+            console.log(evt.target.id);
+        });
         totalPrice += product.totalPrice;
     }
     totalPriceElement.innerText = "EUR " + totalPrice.toString();
