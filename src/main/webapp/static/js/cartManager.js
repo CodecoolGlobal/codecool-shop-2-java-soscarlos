@@ -37,5 +37,5 @@ export async function fillShoppingCard(){
         shopCartContainer.insertAdjacentHTML("beforeend", shoppingCard);
         totalPrice += product.totalPrice;
     }
-    totalPriceElement.innerText = totalPrice.toString();
+    totalPriceElement.innerText = "EUR " + totalPrice.toString();
 }
