@@ -14,7 +14,7 @@ export let productManager = {
                 if (option.text === this.value) {
                     let id = option.id;
                     let data = productManager.getProductsByCategory(id);
-                    data.then(products => fillProducts(products));
+                    data.then(products => fillContainer(products));
                 }
             })
         });
@@ -26,7 +26,7 @@ export let productManager = {
                 if (option.text === this.value) {
                     let id = option.id;
                     let data = productManager.getProductsBySupplier(id);
-                    data.then(products => fillProducts(products));
+                    data.then(products => fillContainer(products));
                 }
             })
         })
@@ -43,7 +43,7 @@ export let productManager = {
     }
 }
 
-function fillProducts(products){
+function fillContainer(products){
     productsContainer.innerHTML = "";
     for (const product of products) {
         let card = cardBuilder(product);
