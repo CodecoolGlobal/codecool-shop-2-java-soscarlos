@@ -1,7 +1,5 @@
 package com.codecool.shop.model.dto;
 
-import java.util.List;
-
 public class ProductDTO {
     private final String id;
     private String name;

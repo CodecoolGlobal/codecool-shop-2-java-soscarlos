@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="utf-8" />
-    <meta name="author" content="Codecool" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta charset="utf-8"/>
+    <meta name="author" content="Codecool"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
 
     <title>Codecool Shop - Shopping Cart</title>
 
@@ -14,11 +14,13 @@
 
     <!--Latest compiled and minified Popper -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
-            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous"></script>
 
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
-            integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+            integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+            crossorigin="anonymous"></script>
 
     <!-- Latest compiled and minified CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet"
@@ -30,6 +32,7 @@
     <!--    <link rel="stylesheet" type="text/css" href="/static/css/custom.css" />-->
 
     <script src="/static/js/cart.js" type="module"></script>
+    <script src="/static/js/checkout.js" type="module"></script>
 </head>
 
 <body>
@@ -49,7 +52,8 @@
                                     <div class="p-5">
                                         <div class="d-flex justify-content-between align-items-center mb-5">
                                             <h1 class="fw-bold mb-0 text-black">Shopping Cart</h1>
-                                            <h6 class="mb-0 text-muted" th:text="${cartProducts.size()} + ' items'"></h6>
+                                            <h6 class="mb-0 text-muted"
+                                                th:text="${cartProducts.size()} + ' items'"></h6>
                                         </div>
                                         <hr class="my-4">
                                         <div id="cart-content"></div>
@@ -69,7 +73,8 @@
                                             <h5 id="total-price"></h5>
                                         </div>
                                         <button type="button" class="btn btn-dark btn-block btn-lg" id="checkout"
-                                                data-mdb-ripple-color="dark">Checkout</button>
+                                                data-mdb-ripple-color="dark">Checkout
+                                        </button>
                                         <div id="checkout-form"></div>
                                     </div>
                                 </div>

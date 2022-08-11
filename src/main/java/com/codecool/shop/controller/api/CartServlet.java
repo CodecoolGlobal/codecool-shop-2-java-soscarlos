@@ -11,9 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @WebServlet(urlPatterns = {"/cart"})
 public class CartServlet extends javax.servlet.http.HttpServlet {
