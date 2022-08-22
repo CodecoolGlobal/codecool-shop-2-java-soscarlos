@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class CartDao {
+public class CartDao implements com.codecool.shop.dao.CartDao {
     private final List<ProductDTO> productsDTO = new ArrayList<>();
 
     private static CartDao instance = null;
