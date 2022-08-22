@@ -8,7 +8,6 @@ import com.codecool.shop.service.product.ProductService;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,7 +16,7 @@ public class CartApiServlet extends javax.servlet.http.HttpServlet {
     private final ServletService service = new ServletService();
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
         String query = request.getQueryString();
         Product productForCart;
         ProductService productService = service.getProductService();
@@ -32,9 +31,9 @@ public class CartApiServlet extends javax.servlet.http.HttpServlet {
             String value = split[1];
             productForCart = productService.getProductById(Integer.parseInt(value));
             ProductDTO productDTO = service.getProductDto(productForCart);
-            if(key.equals("addId")) {
+            if (key.equals("addId")) {
                 cartDao.addToCart(productDTO);
-            } else if (key.equals("removeId")){
+            } else if (key.equals("removeId")) {
                 Optional<ProductDTO> productDTOOptional = cartDao.getProductDTOById(value);
                 productDTOOptional.ifPresent(cartDao::removeFromCart);
             }

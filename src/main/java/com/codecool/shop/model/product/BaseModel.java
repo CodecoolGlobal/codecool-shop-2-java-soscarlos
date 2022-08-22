@@ -1,6 +1,5 @@
 package com.codecool.shop.model.product;
 
-
 import java.lang.reflect.Field;
 
 public class BaseModel {
