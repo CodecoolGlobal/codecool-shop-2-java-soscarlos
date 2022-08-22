@@ -6,7 +6,6 @@ import com.codecool.shop.model.dto.ProductDTO;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,7 +15,7 @@ import java.util.List;
 @WebServlet(urlPatterns = {"/cart"})
 public class CartServlet extends javax.servlet.http.HttpServlet {
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         CartDao cartDao = CartDao.getInstance();
         List<ProductDTO> productsInCart = cartDao.getProductsDTO();
 
