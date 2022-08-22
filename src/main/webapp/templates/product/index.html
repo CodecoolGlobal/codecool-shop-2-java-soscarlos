@@ -23,9 +23,13 @@
     <!-- Latest compiled and minified CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
     <!-- End of Bootstrap components -->
 
     <link rel="stylesheet" type="text/css" href="/static/css/custom.css" />
+
+    <script src="/static/js/main.js" type="module"></script>
 </head>
 
 <body>
@@ -35,8 +39,26 @@
 </div>
 
 <div class="container">
-    <div class="card">
-        <strong th:text="${category.name}">Category Title</strong>
+    <div class="cart">
+        <a href="/cart" id="cart"><i class="bi bi-cart-fill"></i></a>
+        <span class='badge badge-warning' id='cart-count' th:text="${cartProducts.size()}" >0</span>
+    </div>
+
+    <div class="drop-down">
+        <div class="drop-downs">
+            <label><strong>Filter by Category</strong></label>
+            <select id="category-select">
+                <option th:each="category : ${categories}" th:id="${category.id}" th:text="${category.name}">
+                </option>
+            </select>
+        </div>
+        <div class="drop-downs">
+            <label><strong>Filter by Supplier</strong></label>
+            <select id="supplier-select">
+                <option th:each="supplier : ${suppliers}" th:id="${supplier.id}" th:text="${supplier.name}">
+                </option>
+            </select>
+        </div>
     </div>
 
     <div id="products" class="row">
@@ -52,14 +74,14 @@
                         <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
                     </div>
                     <div class="card-text">
-                        <a class="btn btn-success" href="#">Add to cart</a>
+                        <button th:id="${prod.id}" class="btn btn-success">Add to cart</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-</div>
+    </div>
 
 <div th:replace="footer.html :: copy"></div>
 
