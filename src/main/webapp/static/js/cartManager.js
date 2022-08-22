@@ -24,6 +24,7 @@ export function loadButtons() {
 }
 
 export async function fillShoppingCard() {
+    shopCartContainer.innerHTML = "";
     let products = await dataHandler.getProducts();
     let totalPrice = 0;
     let productsReduced = getReducedProducts(products);
@@ -55,9 +56,11 @@ async function changeCartStatus(evt, product){
     let id = product.id;
     let newTotalPrice = 0;
     if (inputValue > product.count) {
+        let amount = inputValue - product.count;
+        let productsInCartPlus = await addProducts(id, amount);
+
         product.count += inputValue - product.count;
 
-        let productsInCartPlus = await dataHandler.addProduct(id);
         let increasedProducts = getReducedProducts(productsInCartPlus);
         for (const increasedProduct of increasedProducts) {
             newTotalPrice += increasedProduct.totalPrice;
@@ -66,14 +69,35 @@ async function changeCartStatus(evt, product){
         totalPriceElement.innerText = "EUR " + newTotalPrice.toString();
 
     } else if (inputValue < product.count) {
+        let amount = product.count - inputValue;
         product.count -= product.count - inputValue;
 
-        let productsInCartMinus = await dataHandler.removeProduct(id);
+        let productsInCartMinus = await removeProducts(id, amount);
         let decreasedProducts = getReducedProducts(productsInCartMinus);
         for (const decreasedProduct of decreasedProducts) {
             newTotalPrice += decreasedProduct.totalPrice;
         }
         cartSizeElement.innerText = productsInCartMinus.length.toString() + " Items";
         totalPriceElement.innerText = "EUR " + newTotalPrice.toString();
+
+        if (inputValue === "0"){
+            await fillShoppingCard();
+        }
     }
+}
+
+async function addProducts(id, amount){
+    let products;
+    for (let i = 0; i < amount; i++) {
+        products = dataHandler.addProduct(id);
+    }
+    return products;
+}
+
+async function removeProducts(id, amount){
+    let products;
+    for (let i = 0; i < amount; i++) {
+        products = dataHandler.removeProduct(id);
+    }
+    return products;
 }

@@ -15,7 +15,7 @@ public class CategoryServlet extends javax.servlet.http.HttpServlet {
     private final ServletService service = new ServletService();
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
         String parameter = req.getParameter("id");
         ProductService productService = service.getProductService();
         List<Product> products = productService.getProductsByCategory(Integer.parseInt(parameter));

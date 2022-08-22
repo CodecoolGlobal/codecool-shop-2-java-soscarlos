@@ -12,6 +12,8 @@ import com.codecool.shop.service.product.ProductDTOService;
 import com.codecool.shop.service.product.ProductService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -19,6 +21,8 @@ import java.io.PrintWriter;
 import java.util.List;
 
 public class ServletService {
+
+    private static final Logger logger = LoggerFactory.getLogger(ServletService.class);
     private final ProductDTOService productDTOService = new ProductDTOService();
     public ProductService getProductService() {
         ProductDao productDataStore = ProductDaoMem.getInstance();
@@ -35,16 +39,20 @@ public class ServletService {
         return productDTOService.getProduct(product);
     }
 
-    public void sendJsonResponse(List<ProductDTO> productsDTO, HttpServletResponse response) throws IOException {
+    public void sendJsonResponse(List<ProductDTO> productsDTO, HttpServletResponse response) {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
-        String jsonResponse = objectMapper.writeValueAsString(productsDTO);
 
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
-        PrintWriter out = response.getWriter();
-        out.print(jsonResponse);
-        out.flush();
+        try {
+            String jsonResponse = objectMapper.writeValueAsString(productsDTO);
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            PrintWriter out = response.getWriter();
+            out.print(jsonResponse);
+            out.flush();
+        } catch (IOException e){
+            logger.error("Cannot write Json Response", new Throwable(e));
+        }
     }
 
 }
