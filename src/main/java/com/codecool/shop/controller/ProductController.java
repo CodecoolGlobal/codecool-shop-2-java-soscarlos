@@ -9,7 +9,9 @@ import com.codecool.shop.dao.implementation.CartDao;
 import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.dao.implementation.SupplierDaoMem;
+import com.codecool.shop.dao.jdbc.ProductCategoryDaoJdbc;
 import com.codecool.shop.dao.jdbc.ShopDataManager;
+import com.codecool.shop.model.product.ProductCategory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.thymeleaf.TemplateEngine;
@@ -19,6 +21,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.sql.DataSource;
 import java.io.IOException;
 
 @WebServlet(urlPatterns = {"/"})
@@ -32,6 +35,13 @@ public class ProductController extends HttpServlet {
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
         SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
         CartDao cartDao = CartDao.getInstance();
+
+        ShopDataManager dbManager = ShopDataManager.getInstance();
+
+        DataSource dataSource = dbManager.connect();
+
+        ProductCategoryDaoJdbc categoryDaoJdbc = ProductCategoryDaoJdbc.getInstance(dataSource);
+
 
 
 
