@@ -119,13 +119,13 @@ function setButtonAttributes() {
 function setFormAttributes() {
     form.style.backgroundColor = "#eae8e8";
     form.style.paddingTop = "25px";
+    form.action = "/payment"
     for (let i = 0; i < form.length-1; i++) {
         if (form[i] !== checkbox) {
             form[i].setAttribute("class", "form-control");
         }
     }
 }
-
 
 function copyBillingAddress() {
     if (checkbox.checked === true) {
