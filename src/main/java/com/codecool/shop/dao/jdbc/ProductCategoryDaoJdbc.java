@@ -15,7 +15,6 @@ public class ProductCategoryDaoJdbc implements ProductCategoryDao {
     private static final Logger logger = LoggerFactory.getLogger(ProductCategoryDaoJdbc.class);
     private static ProductCategoryDaoJdbc instance = null;
     private final DataSource dataSource;
-    private List<ProductCategory> data = new ArrayList<>();
 
     private ProductCategoryDaoJdbc(DataSource dataSource) {
         this.dataSource = dataSource;
@@ -43,9 +42,9 @@ public class ProductCategoryDaoJdbc implements ProductCategoryDao {
             resultSet.next();
             category.setId(resultSet.getInt(1));
         } catch (SQLException e) {
+            logger.error("Could not connect with database", e);
             throw new RuntimeException(e);
         }
-
     }
 
     @Override
@@ -97,15 +96,15 @@ public class ProductCategoryDaoJdbc implements ProductCategoryDao {
             PreparedStatement statement = connection.prepareStatement(sql);
             ResultSet result = statement.executeQuery();
 
-            List<ProductCategory> productCategories = new ArrayList<>();
+            List<ProductCategory> categories = new ArrayList<>();
 
             while (result.next()) {
                 int categoryId = result.getInt(1);
                 ProductCategory productCategory = getCategory(categoryId, result);
-                productCategories.add(productCategory);
+                categories.add(productCategory);
             }
 
-            return productCategories;
+            return categories;
 
         } catch (SQLException e) {
             logger.error("Could not connect with database", e);

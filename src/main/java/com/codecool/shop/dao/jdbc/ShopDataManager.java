@@ -14,10 +14,12 @@ import java.util.Properties;
 public class ShopDataManager {
     private static final Logger logger = LoggerFactory.getLogger(ShopDataManager.class);
     private static ShopDataManager instance = null;
-    private ShopDataManager(){}
 
-    public static ShopDataManager getInstance(){
-        if (instance == null){
+    private ShopDataManager() {
+    }
+
+    public static ShopDataManager getInstance() {
+        if (instance == null) {
             instance = new ShopDataManager();
         }
         return instance;
