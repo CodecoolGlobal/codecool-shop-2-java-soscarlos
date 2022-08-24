@@ -1,7 +1,7 @@
 package com.codecool.shop.controller.api;
 
 import com.codecool.shop.config.TemplateEngineUtil;
-import com.codecool.shop.dao.implementation.CartDao;
+import com.codecool.shop.dao.implementation.CartDaoMem;
 import com.codecool.shop.model.dto.ProductDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,8 +18,8 @@ import java.util.List;
 @WebServlet(urlPatterns = {"/payment"})
 public class PaymentServlet extends javax.servlet.http.HttpServlet {
     private static final Logger logger = LoggerFactory.getLogger(ServletService.class);
-    private final CartDao cartDao = CartDao.getInstance();
-    private final List<ProductDTO> productsInCart = cartDao.getProductsDTO();
+    private final CartDaoMem cartDaoMem = CartDaoMem.getInstance();
+    private final List<ProductDTO> productsInCart = cartDaoMem.getProductsDTO();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {

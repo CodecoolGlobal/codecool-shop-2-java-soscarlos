@@ -1,11 +1,6 @@
 package com.codecool.shop.controller.api;
 
-import com.codecool.shop.dao.ProductCategoryDao;
-import com.codecool.shop.dao.ProductDao;
-import com.codecool.shop.dao.SupplierDao;
-import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
-import com.codecool.shop.dao.implementation.ProductDaoMem;
-import com.codecool.shop.dao.implementation.SupplierDaoMem;
+import com.codecool.shop.controller.LoadService;
 import com.codecool.shop.model.dto.ProductDTO;
 import com.codecool.shop.model.product.Product;
 import com.codecool.shop.service.product.ProductDTOService;
@@ -19,23 +14,49 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
+import java.util.Optional;
 
 public class ServletService {
 
     private static final Logger logger = LoggerFactory.getLogger(ServletService.class);
     private final ProductDTOService productDTOService = new ProductDTOService();
-    public ProductService getProductService() {
-        ProductDao productDataStore = ProductDaoMem.getInstance();
-        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
-        SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
-        return new ProductService(productDataStore, productCategoryDataStore, supplierDataStore);
+
+    private ProductService productService;
+
+    public ServletService() {
+        LoadService load = LoadService.getInstance(logger);
+        productService = load.getProductService();
+    }
+
+    public List<Product> getProductsBySupplierByDao(int id) {
+        return productService.getProductsBySupplier(id);
+    }
+
+    public List<Product> getProductsByCategoryByDao(int id) {
+        return productService.getProductsByCategory(id);
+    }
+
+    public Product getProductByIdByDao(int id) {
+        return productService.getProductById(id);
+    }
+
+    public void addToCartByDao(ProductDTO productDTO){
+        productService.addToCart(productDTO);
+    }
+
+    public void removeFromCartByDao(ProductDTO productDTO){
+        productService.removeFromCart(productDTO);
+    }
+
+    public Optional<ProductDTO> getProductDTOByIdByDao(String id){
+        return productService.getProductDTOById(id);
     }
 
     public List<ProductDTO> getProductsDto(List<Product> products) {
         return productDTOService.getProducts(products);
     }
 
-    public ProductDTO getProductDto(Product product){
+    public ProductDTO getProductDto(Product product) {
         return productDTOService.getProduct(product);
     }
 
@@ -50,7 +71,7 @@ public class ServletService {
             PrintWriter out = response.getWriter();
             out.print(jsonResponse);
             out.flush();
-        } catch (IOException e){
+        } catch (IOException e) {
             logger.error("Cannot write Json Response", e);
             throw new RuntimeException(e);
         }

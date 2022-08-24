@@ -1,5 +1,6 @@
 package com.codecool.shop.dao.jdbc;
 
+import com.codecool.shop.dao.CartDao;
 import com.codecool.shop.model.dto.ProductDTO;
 import com.codecool.shop.model.product.Product;
 import com.codecool.shop.service.product.ProductDTOService;
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class OrderDaoJdbc {
+public class OrderDaoJdbc implements CartDao {
 
     private static final Logger logger = LoggerFactory.getLogger(ProductDaoJdbc.class);
     private static OrderDaoJdbc instance = null;
@@ -58,8 +59,7 @@ public class OrderDaoJdbc {
         }
     }
 
-
-    public Optional<ProductDTO> getProductById(String id) {
+    public Optional<ProductDTO> getProductDTOById(String id) {
         try (Connection connection = dataSource.getConnection()) {
             String sql = "SELECT * FROM orders WHERE product_id = ?;";
             PreparedStatement statement = connection.prepareStatement(sql);
@@ -88,8 +88,7 @@ public class OrderDaoJdbc {
         return Optional.ofNullable(productDTO);
     }
 
-
-    public List<ProductDTO> getProducts() {
+    public List<ProductDTO> getProductsDTO() {
         try (Connection connection = dataSource.getConnection()) {
             String sql = "SELECT * FROM orders;";
             PreparedStatement statement = connection.prepareStatement(sql);
