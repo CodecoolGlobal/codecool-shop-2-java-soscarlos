@@ -15,7 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 import java.io.IOException;
-
+import java.io.PrintWriter;
+import java.util.List;
 
 @WebServlet(urlPatterns = {"/register"})
 public class RegistrationServlet extends javax.servlet.http.HttpServlet {
@@ -40,7 +41,21 @@ public class RegistrationServlet extends javax.servlet.http.HttpServlet {
         String email = req.getParameter("email");
         String password = req.getParameter("password");
         User user = new User(username, email, password);
-        UserDaoJdbc.getInstance(dataSource).add(user);
-        resp.sendRedirect("/");
+        if (!userAlreadyExists(user)) {
+            UserDaoJdbc.getInstance(dataSource).add(user);
+            resp.sendRedirect("/");
+        } else {
+            TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
+            WebContext context = new WebContext(req, resp, req.getServletContext());
+            String error = "User already exists!";
+            context.setVariable("error", error);
+            engine.process("user/register.html", context, resp.getWriter());
+        }
+    }
+
+    private boolean userAlreadyExists(User user) {
+        List<User> users = UserDaoJdbc.getInstance(dataSource).getAll();
+        return users.stream()
+                .anyMatch(u -> u.getEmail().equals(user.getEmail()));
     }
 }
