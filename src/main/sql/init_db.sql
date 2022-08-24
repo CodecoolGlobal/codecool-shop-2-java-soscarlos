@@ -1,8 +1,8 @@
+DROP TABLE IF EXISTS orders;
+DROP TABLE IF EXISTS product;
 DROP TABLE IF EXISTS category;
 DROP TABLE IF EXISTS supplier;
 DROP TABLE IF EXISTS users;
-DROP TABLE IF EXISTS product;
-DROP TABLE IF EXISTS orders;
 
 CREATE TABLE category(
     id          serial NOT NULL PRIMARY KEY,
@@ -45,8 +45,8 @@ CREATE TABLE product
 CREATE TABLE orders
 (
     id         serial NOT NULL PRIMARY KEY,
-    product_id INT    NOT NULL,
-    user_id    INT    NOT NULL,
+    product_id INT,
+    user_id    INT,
     CONSTRAINT fk_product
         FOREIGN KEY (product_id)
             REFERENCES product (id),

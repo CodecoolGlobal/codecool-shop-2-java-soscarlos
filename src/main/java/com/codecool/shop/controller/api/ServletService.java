@@ -51,7 +51,8 @@ public class ServletService {
             out.print(jsonResponse);
             out.flush();
         } catch (IOException e){
-            logger.error("Cannot write Json Response", new Throwable(e));
+            logger.error("Cannot write Json Response", e);
+            throw new RuntimeException(e);
         }
     }
 

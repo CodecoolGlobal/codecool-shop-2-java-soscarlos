@@ -1,7 +1,7 @@
 package com.codecool.shop.dao.jdbc;
 
-import com.codecool.shop.dao.ProductCategoryDao;
-import com.codecool.shop.model.product.ProductCategory;
+import com.codecool.shop.dao.SupplierDao;
+import com.codecool.shop.model.product.Supplier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,37 +10,36 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
-public class ProductCategoryDaoJdbc implements ProductCategoryDao {
-    private static final Logger logger = LoggerFactory.getLogger(ProductCategoryDaoJdbc.class);
-    private static ProductCategoryDaoJdbc instance = null;
+public class SupplierDaoJdbc implements SupplierDao {
+    private static final Logger logger = LoggerFactory.getLogger(SupplierDaoJdbc.class);
+    private static SupplierDaoJdbc instance = null;
     private final DataSource dataSource;
 
-    private ProductCategoryDaoJdbc(DataSource dataSource) {
+    private SupplierDaoJdbc(DataSource dataSource) {
         this.dataSource = dataSource;
 
     }
 
-    public static ProductCategoryDaoJdbc getInstance(DataSource dataSource) {
+    public static SupplierDaoJdbc getInstance(DataSource dataSource) {
         if (instance == null) {
-            instance = new ProductCategoryDaoJdbc(dataSource);
+            instance = new SupplierDaoJdbc(dataSource);
         }
         return instance;
     }
 
     @Override
-    public void add(ProductCategory category) {
+    public void add(Supplier supplier) {
         try (Connection conn = dataSource.getConnection()) {
-            String sql = "INSERT INTO category (name, department, description) VALUES (?, ?, ?)";
+            String sql = "INSERT INTO supplier (name, description) VALUES (?, ?)";
             PreparedStatement statement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            statement.setString(1, category.getName());
-            statement.setString(2, category.getDepartment());
-            statement.setString(3, category.getDescription());
+            statement.setString(1, supplier.getName());
+            statement.setString(2, supplier.getDescription());
 
             statement.executeUpdate();
             ResultSet resultSet = statement.getGeneratedKeys();
             resultSet.next();
-            category.setId(resultSet.getInt(1));
+
+            supplier.setId(resultSet.getInt(1));
         } catch (SQLException e) {
             logger.error("Could not connect with database", e);
             throw new RuntimeException(e);
@@ -48,16 +47,16 @@ public class ProductCategoryDaoJdbc implements ProductCategoryDao {
     }
 
     @Override
-    public ProductCategory find(int id) {
+    public Supplier find(int id) {
         try (Connection connection = dataSource.getConnection()) {
-            String sql = "SELECT * FROM category WHERE id = ?;";
+            String sql = "SELECT * FROM supplier WHERE id = ?;";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, id);
             ResultSet result = statement.executeQuery();
 
             if (!result.next()) return null;
 
-            return getCategory(id, result);
+            return getSupplier(id, result);
 
         } catch (SQLException e) {
             logger.error("Could not connect with database", e);
@@ -65,21 +64,20 @@ public class ProductCategoryDaoJdbc implements ProductCategoryDao {
         }
     }
 
-    private ProductCategory getCategory(int id, ResultSet result) throws SQLException {
+    private Supplier getSupplier(int id, ResultSet result) throws SQLException {
         String name = result.getString("name");
-        String department = result.getString("department");
         String description = result.getString("description");
 
-        ProductCategory category = new ProductCategory(name, department, description);
-        category.setId(id);
+        Supplier supplier = new Supplier(name, description);
+        supplier.setId(id);
 
-        return category;
+        return supplier;
     }
 
     @Override
     public void remove(int id) {
         try (Connection connection = dataSource.getConnection()) {
-            String sql = "DELETE FROM category WHERE id = ?;";
+            String sql = "DELETE FROM supplier WHERE id = ?;";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, id);
             statement.executeUpdate();
@@ -90,21 +88,20 @@ public class ProductCategoryDaoJdbc implements ProductCategoryDao {
     }
 
     @Override
-    public List<ProductCategory> getAll() {
+    public List<Supplier> getAll() {
         try (Connection connection = dataSource.getConnection()) {
-            String sql = "SELECT * FROM category;";
+            String sql = "SELECT * FROM supplier;";
             PreparedStatement statement = connection.prepareStatement(sql);
             ResultSet result = statement.executeQuery();
 
-            List<ProductCategory> categories = new ArrayList<>();
+            List<Supplier> suppliers = new ArrayList<>();
 
             while (result.next()) {
-                int categoryId = result.getInt(1);
-                ProductCategory productCategory = getCategory(categoryId, result);
-                categories.add(productCategory);
+                int supplierId = result.getInt(1);
+                Supplier supplier = getSupplier(supplierId, result);
+                suppliers.add(supplier);
             }
-
-            return categories;
+            return suppliers;
 
         } catch (SQLException e) {
             logger.error("Could not connect with database", e);
