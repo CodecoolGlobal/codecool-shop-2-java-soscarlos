@@ -2,7 +2,7 @@ package com.codecool.shop.controller.api;
 
 import com.codecool.shop.model.dto.ProductDTO;
 import com.codecool.shop.model.product.Product;
-import com.codecool.shop.service.product.ProductService;
+import com.codecool.shop.service.product.ProductMemService;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -16,8 +16,7 @@ public class CategoryServlet extends javax.servlet.http.HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
         String parameter = req.getParameter("id");
-        ProductService productService = service.getProductService();
-        List<Product> products = productService.getProductsByCategory(Integer.parseInt(parameter));
+        List<Product> products = service.getProductsByCategoryByDao(Integer.parseInt(parameter));
         List<ProductDTO> productsDTO = service.getProductsDto(products);
 
         service.sendJsonResponse(productsDTO, resp);

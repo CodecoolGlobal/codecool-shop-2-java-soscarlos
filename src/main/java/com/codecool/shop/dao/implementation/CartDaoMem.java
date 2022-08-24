@@ -6,17 +6,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class CartDao implements com.codecool.shop.dao.CartDao {
+public class CartDaoMem implements com.codecool.shop.dao.CartDao {
     private final List<ProductDTO> productsDTO = new ArrayList<>();
 
-    private static CartDao instance = null;
+    private static CartDaoMem instance = null;
 
-    private CartDao() {
+    private CartDaoMem() {
     }
 
-    public static CartDao getInstance() {
+    public static CartDaoMem getInstance() {
         if (instance == null) {
-            instance = new CartDao();
+            instance = new CartDaoMem();
         }
         return instance;
     }
