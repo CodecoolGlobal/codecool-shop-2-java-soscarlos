@@ -51,7 +51,7 @@ public class Initializer implements ServletContextListener {
 
         productDataStore.add(new Product("Macbook Air 2020", new BigDecimal("2000"), "EUR", "A macOS laptop with a 13.30-inch display that has a resolution of 2560x1600 pixels. It is powered by a Core i3 processor and it comes with 8GB of RAM.", laptop, apple));
         productDataStore.add(new Product("Macbook Pro 2019", new BigDecimal("1400"), "EUR", "The 13-inch MacBook Pro is Apple's best ultraportable laptop, thanks to stylish looks, an excellent touchpad, and long battery life.", laptop, apple));
-        productDataStore.add(new Product("Macbook 2015", new BigDecimal("600"), "EUR", "he 15-inch MacBook Pro has a brilliant Retina Display, powerful processor and new graphics card options, plus faster flash storage.", laptop, apple));
+        productDataStore.add(new Product("Macbook 2015", new BigDecimal("600"), "EUR", "The 15-inch MacBook Pro has a brilliant Retina Display, powerful processor and new graphics card options, plus faster flash storage.", laptop, apple));
     }
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
