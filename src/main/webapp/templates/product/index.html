@@ -37,8 +37,15 @@
 <div class="jumbotron text-center">
     <h1>Codecool Shop</h1>
 </div>
-
 <div class="container">
+    <div class="user-interaction">
+        <div class="register" >
+            <a href="/register" class="btn btn-warning" id="register">Register</a>
+        </div>
+        <div class="login">
+            <a href="/login" class="btn btn-warning" id="login">Login</a>
+        </div>
+    </div>
     <div class="cart">
         <a href="/cart" id="cart"><i class="bi bi-cart-fill"></i></a>
         <span class='badge badge-warning' id='cart-count' th:text="${cartProducts.size()}" >0</span>
