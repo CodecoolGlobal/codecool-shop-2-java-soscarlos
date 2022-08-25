@@ -23,8 +23,6 @@ import java.util.List;
 @WebServlet(urlPatterns = {"/login"})
 public class LoginServlet extends javax.servlet.http.HttpServlet {
     private static final Logger logger = LoggerFactory.getLogger(ServletService.class);
-    private final ShopDataManager dbManager = ShopDataManager.getInstance();
-    private final DataSource dataSource = dbManager.connect();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
