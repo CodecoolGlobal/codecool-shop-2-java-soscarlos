@@ -5,6 +5,7 @@ import com.codecool.shop.controller.api.ServletService;
 import com.codecool.shop.dao.jdbc.ShopDataManager;
 import com.codecool.shop.dao.jdbc.UserDaoJdbc;
 import com.codecool.shop.model.user.User;
+import com.codecool.shop.service.RegistrationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.thymeleaf.TemplateEngine;
@@ -40,13 +41,13 @@ public class LoginServlet extends javax.servlet.http.HttpServlet {
         String email = req.getParameter("email");
         String password = req.getParameter("password");
         String error = "";
-        if (emailMatchesPassword(email, password) && emailAlreadyExists(email)) {
-            // TODO login
+        if (RegistrationService.emailMatchesPassword(email, password) && RegistrationService.emailAlreadyExists(email)) {
+            // TODO
             System.out.println("login");
         } else {
-            if (!emailAlreadyExists(email)) {
+            if (!RegistrationService.emailAlreadyExists(email)) {
                 error = "Username doesn't exist";
-            } if (!emailMatchesPassword(email, password)) {
+            } if (!RegistrationService.emailMatchesPassword(email, password)) {
                 error = "Wrong username or password!";
             }
             TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
@@ -54,19 +55,5 @@ public class LoginServlet extends javax.servlet.http.HttpServlet {
             context.setVariable("error", error);
             engine.process("user/login.html", context, resp.getWriter());
         }
-    }
-
-    // TODO
-    private boolean emailMatchesPassword(String email, String password) {
-        if (emailAlreadyExists(email)) {
-            return true;
-        }
-        return false;
-    }
-
-    private boolean emailAlreadyExists(String email) {
-        List<User> users = UserDaoJdbc.getInstance(dataSource).getAll();
-        return users.stream()
-                .anyMatch(u -> u.getEmail().equals(email));
     }
 }

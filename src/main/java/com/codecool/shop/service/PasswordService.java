@@ -1,8 +1,8 @@
-package com.codecool.shop.dao;
+package com.codecool.shop.service;
 
 import org.mindrot.jbcrypt.BCrypt;
 
-public class Util {
+public class PasswordService {
     public static String hashPassword(String password) {
         int workload = 12;
         String salt = BCrypt.gensalt(workload);

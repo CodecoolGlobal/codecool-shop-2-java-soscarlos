@@ -1,16 +1,12 @@
 package com.codecool.shop.dao.jdbc;
 
 import com.codecool.shop.dao.UserDao;
-import com.codecool.shop.dao.Util;
-import com.codecool.shop.model.product.Product;
-import com.codecool.shop.model.product.ProductCategory;
-import com.codecool.shop.model.product.Supplier;
+import com.codecool.shop.service.PasswordService;
 import com.codecool.shop.model.user.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.sql.DataSource;
-import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +36,7 @@ public class UserDaoJdbc implements UserDao {
             PreparedStatement statement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, user.getName());
             statement.setString(2, user.getEmail());
-            statement.setString(3, Util.hashPassword(user.getPassword()));
+            statement.setString(3, PasswordService.hashPassword(user.getPassword()));
 
             statement.executeUpdate();
             ResultSet resultSet = statement.getGeneratedKeys();
