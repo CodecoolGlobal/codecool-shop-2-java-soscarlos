@@ -29,4 +29,10 @@ public class RegistrationService {
         }
         return answer;
     }
+
+    public static boolean emailAlreadyExists(String email) {
+        List<User> users = UserDaoJdbc.getInstance(dataSource).getAll();
+        return users.stream()
+                .anyMatch(u -> u.getEmail().equals(email));
+    }
 }
