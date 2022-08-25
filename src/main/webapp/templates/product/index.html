@@ -39,11 +39,14 @@
 </div>
 <div class="container">
     <div class="user-interaction">
-        <div class="register" >
+        <div class="register" th:if="${session.userid == null}">
             <a href="/register" class="btn btn-warning" id="register">Register</a>
         </div>
-        <div class="login">
+        <div class="login" th:if="${session.userid == null}">
             <a href="/login" class="btn btn-warning" id="login">Login</a>
+        </div>
+        <div class="logout" th:unless="${session.userid == null}">
+            <a href="/logout" class="btn btn-warning" id="logout">Logout</a>
         </div>
     </div>
     <div class="cart">

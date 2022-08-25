@@ -43,7 +43,6 @@ public class LoginServlet extends javax.servlet.http.HttpServlet {
         if (RegistrationService.emailMatchesPassword(email, password)) {
             HttpSession session = req.getSession();
             session.setAttribute("userid", RegistrationService.getIdForUserInSession(email));
-            System.out.println(req.getSession(false));
             resp.sendRedirect("/");
         } else {
             if (!RegistrationService.emailAlreadyExists(email)) {
