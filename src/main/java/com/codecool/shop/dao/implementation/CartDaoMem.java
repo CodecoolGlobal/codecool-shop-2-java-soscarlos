@@ -35,4 +35,9 @@ public class CartDaoMem implements com.codecool.shop.dao.CartDao {
     public List<ProductDTO> getProductsDTO() {
         return productsDTO;
     }
+
+    @Override
+    public void updateOrderId(int userId) {
+//        NO IMPLEMENTATION FOR MEMORY
+    }
 }

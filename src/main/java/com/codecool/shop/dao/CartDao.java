@@ -13,4 +13,6 @@ public interface CartDao {
     public Optional<ProductDTO> getProductDTOById(String id);
 
     public List<ProductDTO> getProductsDTO();
+
+    public void updateOrderId(int userId);
 }

@@ -6,6 +6,7 @@ const productCounter = document.getElementById("cart-count");
 const shopCartContainer = document.getElementById("cart-content");
 const totalPriceElement = document.getElementById("total-price");
 const cartSizeElement = document.getElementById("cart-size");
+const checkOutButton = document.getElementById("checkout");
 
 export function loadButtons() {
     let cardContainers = productsContainer.children;
@@ -39,6 +40,18 @@ export async function fillShoppingCard() {
         totalPrice += product.totalPrice;
     }
     totalPriceElement.innerText = "EUR " + totalPrice.toString();
+}
+
+export function storeOrder(){
+    checkOutButton.addEventListener("click", async function (evt) {
+        let numberStart = 3;
+        let userId = 1;
+        let quantity = parseInt(cartSizeElement.innerText);
+        let total = parseFloat(totalPriceElement.innerText.substring(numberStart));
+        let status = "CHECKED";
+
+        await dataHandler.createNewOrder(userId, quantity, total, status);
+    });
 }
 
 function getReducedProducts(products) {
