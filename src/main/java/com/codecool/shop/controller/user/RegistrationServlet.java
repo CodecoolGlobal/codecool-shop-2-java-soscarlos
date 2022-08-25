@@ -14,6 +14,7 @@ import org.thymeleaf.context.WebContext;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 import java.io.IOException;
 
@@ -42,6 +43,8 @@ public class RegistrationServlet extends javax.servlet.http.HttpServlet {
         User user = new User(username, email, password);
         if (!RegistrationService.userAlreadyExists(user)) {
             UserDaoJdbc.getInstance(dataSource).add(user);
+            HttpSession session = req.getSession();
+            session.setAttribute("userid", RegistrationService.getIdForUserInSession(email));
             resp.sendRedirect("/");
         } else {
             TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
