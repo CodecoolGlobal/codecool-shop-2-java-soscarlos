@@ -17,17 +17,16 @@ public class RegistrationService {
                 .anyMatch(u -> u.getEmail().equals(user.getEmail()));
     }
 
-    // TODO
     public static boolean emailMatchesPassword(String email, String password) {
-        if (emailAlreadyExists(email)) {
-            return true;
-        }
-        return false;
-    }
-
-    public static boolean emailAlreadyExists(String email) {
+        boolean answer = false;
         List<User> users = UserDaoJdbc.getInstance(dataSource).getAll();
-        return users.stream()
-                .anyMatch(u -> u.getEmail().equals(email));
+        for (User user : users) {
+            if (user.getEmail().equals(email)) {
+                int userId = user.getId();
+                User existingUser = UserDaoJdbc.getInstance(dataSource).find(userId);
+                answer = PasswordService.checkPassword(password, existingUser.getPassword());
+            }
+        }
+        return answer;
     }
 }

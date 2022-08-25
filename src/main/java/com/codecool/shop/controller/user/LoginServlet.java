@@ -41,15 +41,10 @@ public class LoginServlet extends javax.servlet.http.HttpServlet {
         String email = req.getParameter("email");
         String password = req.getParameter("password");
         String error = "";
-        if (RegistrationService.emailMatchesPassword(email, password) && RegistrationService.emailAlreadyExists(email)) {
-            // TODO
-            System.out.println("login");
+        if (RegistrationService.emailMatchesPassword(email, password)) {
+            resp.sendRedirect("/");
         } else {
-            if (!RegistrationService.emailAlreadyExists(email)) {
-                error = "Username doesn't exist";
-            } if (!RegistrationService.emailMatchesPassword(email, password)) {
-                error = "Wrong username or password!";
-            }
+            error = "Wrong username or password!";
             TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
             WebContext context = new WebContext(req, resp, req.getServletContext());
             context.setVariable("error", error);
