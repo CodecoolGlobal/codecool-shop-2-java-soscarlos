@@ -10,6 +10,7 @@ import java.util.List;
 public class RegistrationService {
     private static final ShopDataManager dbManager = ShopDataManager.getInstance();
     private static final DataSource dataSource = dbManager.connect();
+    private static final List<User> users = UserDaoJdbc.getInstance(dataSource).getAll();
 
     public static boolean userAlreadyExists(User user) {
         List<User> users = UserDaoJdbc.getInstance(dataSource).getAll();
@@ -19,7 +20,6 @@ public class RegistrationService {
 
     public static boolean emailMatchesPassword(String email, String password) {
         boolean answer = false;
-        List<User> users = UserDaoJdbc.getInstance(dataSource).getAll();
         for (User user : users) {
             if (user.getEmail().equals(email)) {
                 int userId = user.getId();
@@ -31,8 +31,17 @@ public class RegistrationService {
     }
 
     public static boolean emailAlreadyExists(String email) {
-        List<User> users = UserDaoJdbc.getInstance(dataSource).getAll();
         return users.stream()
                 .anyMatch(u -> u.getEmail().equals(email));
+    }
+
+    public static int getIdForUserInSession(String email) {
+        int userId = 0;
+        for (User user : users) {
+            if (user.getEmail().equals(email)) {
+                userId = user.getId();
+            }
+        }
+        return userId;
     }
 }
