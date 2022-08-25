@@ -1,3 +1,8 @@
-import {fillShoppingCard} from "./cartManager.js";
+import {fillShoppingCard, storeOrder} from "./cartManager.js";
 
-window.addEventListener("load", fillShoppingCard);
+window.addEventListener("load", initializeCart);
+
+async function initializeCart() {
+    await fillShoppingCard();
+    storeOrder();
+}

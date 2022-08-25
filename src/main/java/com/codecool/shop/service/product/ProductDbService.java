@@ -15,13 +15,13 @@ public class ProductDbService implements ProductService {
     private ProductDao productDaoJdbc;
     private ProductCategoryDao productCategoryDaoJdbc;
     private SupplierDao supplierDaoJdbc;
-    private CartDao orderDao;
+    private CartDao cartDao;
 
-    public ProductDbService(ProductDao productDao, ProductCategoryDao productCategoryDao, SupplierDao supplierDao, CartDao orderDao) {
+    public ProductDbService(ProductDao productDao, ProductCategoryDao productCategoryDao, SupplierDao supplierDao, CartDao cartDao) {
         this.productDaoJdbc = productDao;
         this.productCategoryDaoJdbc = productCategoryDao;
         this.supplierDaoJdbc = supplierDao;
-        this.orderDao = orderDao;
+        this.cartDao = cartDao;
     }
 
     public ProductCategory getProductCategory(int categoryId) {
@@ -43,14 +43,14 @@ public class ProductDbService implements ProductService {
     }
 
     public void addToCart(ProductDTO productDTO){
-        orderDao.addToCart(productDTO);
+        cartDao.addToCart(productDTO);
     }
 
     public void removeFromCart(ProductDTO productDTO) {
-        orderDao.removeFromCart(productDTO);
+        cartDao.removeFromCart(productDTO);
     }
 
     public Optional<ProductDTO> getProductDTOById(String id) {
-        return orderDao.getProductDTOById(id);
+        return cartDao.getProductDTOById(id);
     }
 }

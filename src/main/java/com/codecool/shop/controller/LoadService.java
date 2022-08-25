@@ -81,7 +81,7 @@ public class LoadService {
             ProductDaoJdbc productDaoJdbc = ProductDaoJdbc.getInstance(dataSource);
             ProductCategoryDaoJdbc categoryDaoJdbc = ProductCategoryDaoJdbc.getInstance(dataSource);
             SupplierDaoJdbc supplierDaoJdbc = SupplierDaoJdbc.getInstance(dataSource);
-            CartDao orderDao = OrderDaoJdbc.getInstance(dataSource);
+            CartDao orderDao = CartDaoJdbc.getInstance(dataSource);
             service = new ProductDbService(productDaoJdbc, categoryDaoJdbc, supplierDaoJdbc, orderDao);
         }
         return service;
@@ -148,9 +148,9 @@ public class LoadService {
         } else if (dao.equals(jdbc)) {
             ShopDataManager dbManager = ShopDataManager.getInstance();
             DataSource dataSource = dbManager.connect();
-            OrderDaoJdbc orderDaoJdbc = OrderDaoJdbc.getInstance(dataSource);
+            CartDaoJdbc cartDaoJdbc = CartDaoJdbc.getInstance(dataSource);
 
-            productDTOS = orderDaoJdbc.getProductsDTO();
+            productDTOS = cartDaoJdbc.getProductsDTO();
 
         }
         return productDTOS;
