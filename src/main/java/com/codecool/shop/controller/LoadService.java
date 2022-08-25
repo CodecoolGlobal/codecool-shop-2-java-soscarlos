@@ -23,6 +23,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 import java.util.Properties;
 
 public class LoadService {
@@ -30,6 +31,7 @@ public class LoadService {
     private final String memory = "memory";
     private final String jdbc = "jdbc";
     private final String dao;
+
     private LoadService(Logger logger) {
         dao = getDao(logger);
     }
@@ -58,17 +60,9 @@ public class LoadService {
         }
     }
 
-    public String getMemory() {
-        return memory;
-    }
-
-    public String getJdbc() {
-        return jdbc;
-    }
-
     public ProductService getProductService() {
         ProductService service = null;
-        if (dao.equals(memory)){
+        if (dao.equals(memory)) {
             ProductDao productDataStore = ProductDaoMem.getInstance();
             ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
             SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
@@ -87,7 +81,7 @@ public class LoadService {
         return service;
     }
 
-    public List<ProductCategory> getCategories(){
+    public List<ProductCategory> getCategories() {
         List<ProductCategory> categories = null;
         if (dao.equals(memory)) {
             ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
@@ -104,7 +98,8 @@ public class LoadService {
         }
         return categories;
     }
-    public List<Product> getAllProducts(){
+
+    public List<Product> getAllProducts() {
         List<Product> products = null;
         if (dao.equals(memory)) {
             ProductDao productDataStore = ProductDaoMem.getInstance();
@@ -121,7 +116,8 @@ public class LoadService {
         }
         return products;
     }
-    public List<Supplier> getAllSuppliers(){
+
+    public List<Supplier> getAllSuppliers() {
         List<Supplier> suppliers = null;
         if (dao.equals(memory)) {
             SupplierDao supplierDao = SupplierDaoMem.getInstance();
@@ -138,7 +134,8 @@ public class LoadService {
         }
         return suppliers;
     }
-    public List<ProductDTO> getAllProductDTOs(){
+
+    public List<ProductDTO> getAllProductDTOs() {
         List<ProductDTO> productDTOS = null;
         if (dao.equals(memory)) {
             CartDaoMem cartDaoMem = CartDaoMem.getInstance();
@@ -154,5 +151,23 @@ public class LoadService {
 
         }
         return productDTOS;
+    }
+
+    public List<ProductDTO> getAllProductDTOsByUser(int userId) {
+
+        ShopDataManager dbManager = ShopDataManager.getInstance();
+        DataSource dataSource = dbManager.connect();
+        CartDaoJdbc cartDaoJdbc = CartDaoJdbc.getInstance(dataSource);
+
+        return cartDaoJdbc.getProductsDTOByUser(userId);
+    }
+
+    public Optional<ProductDTO> getProductDTOByIdByUser(String productId, int userId) {
+
+        ShopDataManager dbManager = ShopDataManager.getInstance();
+        DataSource dataSource = dbManager.connect();
+        CartDaoJdbc cartDaoJdbc = CartDaoJdbc.getInstance(dataSource);
+
+        return cartDaoJdbc.getProductDTOByIdByUser(productId, userId);
     }
 }

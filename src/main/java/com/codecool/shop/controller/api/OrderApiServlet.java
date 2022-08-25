@@ -3,24 +3,24 @@ package com.codecool.shop.controller.api;
 import com.codecool.shop.dao.jdbc.OrderDaoJdbc;
 import com.codecool.shop.dao.jdbc.ShopDataManager;
 import com.codecool.shop.model.dto.OrderDTO;
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.math.BigDecimal;
 
 @WebServlet(urlPatterns = {"/api/order"})
 public class OrderApiServlet extends HttpServlet {
     private static final Logger logger = LoggerFactory.getLogger(OrderApiServlet.class);
+
+    private final ServletService service = new ServletService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
@@ -31,6 +31,9 @@ public class OrderApiServlet extends HttpServlet {
         ShopDataManager dbManager = ShopDataManager.getInstance();
         DataSource dataSource = dbManager.connect();
         OrderDaoJdbc orderDaoJdbc = OrderDaoJdbc.getInstance(dataSource);
+
+        HttpSession session = request.getSession(false);
+        int userId = (Integer) session.getAttribute("userid");
 
         StringBuilder builder = new StringBuilder();
 
@@ -49,7 +52,6 @@ public class OrderApiServlet extends HttpServlet {
             throw new RuntimeException(e);
         }
 
-        int userId = jsonObject.getInt("user_id");
         int quantity = jsonObject.getInt("quantity");
         BigDecimal total = jsonObject.getBigDecimal("total");
         String StringStatus = jsonObject.getString("status");
@@ -58,7 +60,7 @@ public class OrderApiServlet extends HttpServlet {
 
         orderDaoJdbc.checkOutOrder(order);
 
-        System.out.println(jsonObject);
+        service.updateOrderId(order.getId(), userId);
 
     }
 }

@@ -37,7 +37,7 @@ public class CartDaoMem implements com.codecool.shop.dao.CartDao {
     }
 
     @Override
-    public void updateOrderId(int userId) {
+    public void updateOrderId(int orderId, int userId) {
 //        NO IMPLEMENTATION FOR MEMORY
     }
 }

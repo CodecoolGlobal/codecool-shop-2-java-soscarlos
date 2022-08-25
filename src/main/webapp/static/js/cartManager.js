@@ -1,5 +1,6 @@
 import {dataHandler} from "./dataManager.js";
 import {shopCartBuilder} from "./htmlFactory.js";
+import {greetingsContainer} from "./productManager.js";
 
 const productsContainer = document.getElementById("products");
 const productCounter = document.getElementById("cart-count");
@@ -14,13 +15,17 @@ export function loadButtons() {
     for (const cardContainer of cardContainers) {
         let cardBody = cardContainer.firstChild.nextSibling.childNodes.item(5)
         let cardText = cardBody.childNodes.item(3);
-        let cardButton = cardText.childNodes.item(1);
 
-        cardButton.addEventListener("click", async function (evt) {
-            let productId = evt.target.id;
-            let productsInCart = await dataHandler.addProduct(productId);
-            productCounter.innerText = productsInCart.length;
-        });
+        if (greetingsContainer.length !== 0){
+            console.log(greetingsContainer);
+            let cardButton = cardText.childNodes.item(1);
+
+            cardButton.addEventListener("click", async function (evt) {
+                let productId = evt.target.id;
+                let productsInCart = await dataHandler.addProduct(productId);
+                productCounter.innerText = productsInCart.length;
+            });
+        }
     }
 }
 

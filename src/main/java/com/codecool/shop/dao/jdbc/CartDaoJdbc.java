@@ -33,9 +33,10 @@ public class CartDaoJdbc implements CartDao {
 
     public void addToCart(ProductDTO product) {
         try (Connection conn = dataSource.getConnection()) {
-            String sql = "INSERT INTO cart (product_id) VALUES (?)";
+            String sql = "INSERT INTO cart (product_id, user_id) VALUES (?, ?)";
             PreparedStatement statement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             statement.setInt(1, Integer.parseInt(product.getId()));
+            statement.setInt(2, Integer.parseInt(product.getUserId()));
 
             statement.executeUpdate();
             ResultSet resultSet = statement.getGeneratedKeys();
@@ -49,12 +50,13 @@ public class CartDaoJdbc implements CartDao {
 
     public void removeFromCart(ProductDTO product) {
         try (Connection connection = dataSource.getConnection()) {
-            String sql = "WITH row AS (SELECT * FROM cart WHERE product_id = ? LIMIT 1)\n" +
+            String sql = "WITH row AS (SELECT * FROM cart WHERE product_id = ? AND user_id = ? LIMIT 1)\n" +
                     "DELETE\n" +
                     "FROM cart\n" +
                     "WHERE id IN (SELECT id FROM row);";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, Integer.parseInt(product.getId()));
+            statement.setInt(2, Integer.parseInt(product.getUserId()));
             statement.executeUpdate();
         } catch (SQLException e) {
             logger.error("Could not connect with database", e);
@@ -67,6 +69,23 @@ public class CartDaoJdbc implements CartDao {
             String sql = "SELECT * FROM cart WHERE product_id = ?;";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, Integer.parseInt(id));
+            ResultSet result = statement.executeQuery();
+
+            if (!result.next()) return Optional.empty();
+
+            return getProductDTO(id, result);
+
+        } catch (SQLException e) {
+            logger.error("Could not connect with database", e);
+            throw new RuntimeException(e);
+        }
+    }
+    public Optional<ProductDTO> getProductDTOByIdByUser(String id, int userId) {
+        try (Connection connection = dataSource.getConnection()) {
+            String sql = "SELECT * FROM cart WHERE product_id = ? AND user_id = ?;";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, Integer.parseInt(id));
+            statement.setInt(2, userId);
             ResultSet result = statement.executeQuery();
 
             if (!result.next()) return Optional.empty();
@@ -112,8 +131,42 @@ public class CartDaoJdbc implements CartDao {
         }
     }
 
-    @Override
-    public void updateOrderId(int userId) {
-//        TODO FIRST MERGE WITH LOGIN/LOGOUT CONFIG
+    public List<ProductDTO> getProductsDTOByUser(int userId) {
+        try (Connection connection = dataSource.getConnection()) {
+            String sql = "SELECT * FROM cart WHERE user_id = ?;";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, userId);
+            ResultSet result = statement.executeQuery();
+
+            List<ProductDTO> products = new ArrayList<>();
+
+            while (result.next()) {
+                int productId = result.getInt(2);
+                Optional<ProductDTO> productDTO = getProductDTO(String.valueOf(productId), result);
+                productDTO.ifPresent(products::add);
+            }
+            return products;
+
+        } catch (SQLException e) {
+            logger.error("Could not connect with database", e);
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void updateOrderId(int orderId, int userId) {
+        try (Connection conn = dataSource.getConnection()) {
+            String sql = "UPDATE cart SET order_id = ? WHERE user_id = ?;";
+            PreparedStatement statement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            statement.setInt(1, orderId);
+            statement.setInt(2, userId);
+
+            statement.executeUpdate();
+            ResultSet resultSet = statement.getGeneratedKeys();
+            resultSet.next();
+
+        } catch (SQLException e) {
+            logger.error("Could not connect with database", e);
+            throw new RuntimeException(e);
+        }
     }
 }
