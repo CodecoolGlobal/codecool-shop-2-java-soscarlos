@@ -18,7 +18,7 @@ public class LogoutServlet  extends javax.servlet.http.HttpServlet{
         try {
             req.getSession(false).invalidate();
             System.out.println(req.getSession(false));
-            resp.sendRedirect("/");
+            resp.sendRedirect("/login");
         } catch (IOException e) {
             logger.error("Error by trying to write servlet response", new Throwable(e));
         }
