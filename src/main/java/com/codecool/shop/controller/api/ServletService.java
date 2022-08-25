@@ -48,6 +48,10 @@ public class ServletService {
         productService.removeFromCart(productDTO);
     }
 
+    public void updateOrderId(int orderId, int userId){
+        productService.updateOrderId(orderId, userId);
+    }
+
     public Optional<ProductDTO> getProductDTOByIdByDao(String id){
         return productService.getProductDTOById(id);
     }

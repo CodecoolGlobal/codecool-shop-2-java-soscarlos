@@ -7,6 +7,7 @@ public class ProductDTO {
     private String description;
     private String productCategory;
     private String supplier;
+    private String userId;
 
     public ProductDTO(String id, String name, String defaultPrice, String description, String productCategory, String supplier) {
         this.id = id;
@@ -59,5 +60,13 @@ public class ProductDTO {
 
     public void setSupplier(String supplier) {
         this.supplier = supplier;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

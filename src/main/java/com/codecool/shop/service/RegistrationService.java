@@ -42,6 +42,17 @@ public class RegistrationService {
                 userId = user.getId();
             }
         }
+
         return userId;
+    }
+    public static String getNameFromUserEmail(String email) {
+        String name = "";
+        for (User user : users) {
+            if (user.getEmail().equals(email)) {
+                name = user.getName();
+            }
+        }
+
+        return name;
     }
 }

@@ -54,4 +54,9 @@ public class ProductMemService implements ProductService {
     public Optional<ProductDTO> getProductDTOById(String id) {
         return cartDao.getProductDTOById(id);
     }
+
+    @Override
+    public void updateOrderId(int orderId, int userId) {
+//        NO IMPLEMENTATION FOR MEMORY
+    }
 }

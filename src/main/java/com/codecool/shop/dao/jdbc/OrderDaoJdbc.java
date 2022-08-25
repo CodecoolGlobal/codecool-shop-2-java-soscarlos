@@ -92,25 +92,4 @@ public class OrderDaoJdbc {
             throw new RuntimeException(e);
         }
     }
-
-//    public List<ProductDTO> getProductsDTO() {
-//        try (Connection connection = dataSource.getConnection()) {
-//            String sql = "SELECT * FROM cart;";
-//            PreparedStatement statement = connection.prepareStatement(sql);
-//            ResultSet result = statement.executeQuery();
-//
-//            List<ProductDTO> products = new ArrayList<>();
-//
-//            while (result.next()) {
-//                int productId = result.getInt(2);
-//                Optional<ProductDTO> productDTO = getProductDTO(String.valueOf(productId), result);
-//                productDTO.ifPresent(products::add);
-//            }
-//            return products;
-//
-//        } catch (SQLException e) {
-//            logger.error("Could not connect with database", e);
-//            throw new RuntimeException(e);
-//        }
-//    }
 }

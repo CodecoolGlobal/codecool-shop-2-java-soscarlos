@@ -1,8 +1,9 @@
 import {dataHandler} from "./dataManager.js";
-import {cardBuilder} from "./htmlFactory.js";
+import {cardBuilder, buttonBuilder} from "./htmlFactory.js";
 import {loadButtons} from "./cartManager.js";
 
 const productsContainer = document.getElementById("products");
+export const greetingsContainer = document.getElementsByClassName("greeting");
 
 export let productManager = {
 
@@ -43,9 +44,18 @@ export let productManager = {
 
 function fillContainer(products){
     productsContainer.innerHTML = "";
+
     for (const product of products) {
         let card = cardBuilder(product);
         productsContainer.insertAdjacentHTML("beforeend", card);
+    }
+
+    for (const product of products){
+        let buttonContainer = document.getElementById(`button-container${product.id}`);
+        if (greetingsContainer.length !== 0){
+            let button = buttonBuilder(product);
+            buttonContainer.insertAdjacentHTML("beforeend", button);
+        }
     }
     loadButtons();
 }

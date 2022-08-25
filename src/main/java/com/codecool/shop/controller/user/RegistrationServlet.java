@@ -44,7 +44,8 @@ public class RegistrationServlet extends javax.servlet.http.HttpServlet {
         if (!RegistrationService.userAlreadyExists(user)) {
             UserDaoJdbc.getInstance(dataSource).add(user);
             HttpSession session = req.getSession();
-            session.setAttribute("userid", RegistrationService.getIdForUserInSession(email));
+            session.setAttribute("userid", user.getId());
+            session.setAttribute("userName", user.getName());
             resp.sendRedirect("/");
         } else {
             TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());

@@ -115,3 +115,8 @@ body {
 .login {
     margin-right: 10px;
 }
+
+.greeting {
+    margin-right: 20px;
+    margin-left: 20px;
+}

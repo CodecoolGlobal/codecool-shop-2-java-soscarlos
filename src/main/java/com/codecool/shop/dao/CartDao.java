@@ -14,5 +14,5 @@ public interface CartDao {
 
     public List<ProductDTO> getProductsDTO();
 
-    public void updateOrderId(int userId);
+    public void updateOrderId(int orderId, int userId);
 }

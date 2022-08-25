@@ -18,4 +18,5 @@ public interface ProductService {
     public void addToCart(ProductDTO productDTO);
     public void removeFromCart(ProductDTO productDTO);
     public Optional<ProductDTO> getProductDTOById(String id);
+    void updateOrderId(int orderId, int userId);
 }

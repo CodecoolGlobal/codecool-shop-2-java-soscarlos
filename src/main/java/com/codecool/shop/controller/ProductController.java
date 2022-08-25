@@ -14,7 +14,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(urlPatterns = {"/"})
@@ -26,13 +28,21 @@ public class ProductController extends HttpServlet {
 
         LoadService load = LoadService.getInstance(logger);
 
-        List<ProductCategory> categories = load.getCategories();
-        List<Product> products = load.getAllProducts();
-        List<Supplier> suppliers = load.getAllSuppliers();
-        List<ProductDTO> productDTOs = load.getAllProductDTOs();
 
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
+
+        List<ProductDTO> productDTOs = new ArrayList<>();
+
+        HttpSession session = req.getSession(false);
+        if (session != null) {
+            int userid = (Integer) session.getAttribute("userid");
+            productDTOs = load.getAllProductDTOsByUser(userid);
+        }
+
+        List<ProductCategory> categories = load.getCategories();
+        List<Product> products = load.getAllProducts();
+        List<Supplier> suppliers = load.getAllSuppliers();
 
         context.setVariable("categories", categories);
         context.setVariable("products", products);
@@ -44,7 +54,5 @@ public class ProductController extends HttpServlet {
         } catch (IOException e) {
             logger.error("Error by attempting to write servlet response {} ", resp, new Throwable(e));
         }
-
     }
-
 }

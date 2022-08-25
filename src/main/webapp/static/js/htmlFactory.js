@@ -10,12 +10,16 @@ export function cardBuilder(product) {
                     <div class="card-text">
                         <p class="lead">${product.defaultPrice} EUR</p>
                     </div>
-                    <div class="card-text">
-                        <button id="${product.id}" class="btn btn-success">Add to cart</button>
+                    <div class="card-text" id="button-container${product.id}">
+                        
                     </div>
                 </div>
             </div>
         </div>`
+}
+
+export function buttonBuilder(product){
+    return `<button id="${product.id}" class="btn btn-success">Add to cart</button>`
 }
 
 export function shopCartBuilder(product) {
