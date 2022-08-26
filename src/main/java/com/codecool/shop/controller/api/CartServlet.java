@@ -23,7 +23,6 @@ public class CartServlet extends javax.servlet.http.HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
         LoadService load = LoadService.getInstance(logger);
-
         List<ProductDTO> productsInCart = new ArrayList<>();
 
         HttpSession session = req.getSession(false);
@@ -31,7 +30,6 @@ public class CartServlet extends javax.servlet.http.HttpServlet {
             int userid = (Integer) session.getAttribute("userid");
             productsInCart = load.getAllProductDTOsByUser(userid);
         }
-
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
         context.setVariable("cartProducts", productsInCart);

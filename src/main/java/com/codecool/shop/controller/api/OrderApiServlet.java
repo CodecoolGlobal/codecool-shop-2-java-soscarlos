@@ -23,10 +23,6 @@ public class OrderApiServlet extends HttpServlet {
     private final ServletService service = new ServletService();
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
-    }
-
-    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) {
         ShopDataManager dbManager = ShopDataManager.getInstance();
         DataSource dataSource = dbManager.connect();
@@ -36,9 +32,7 @@ public class OrderApiServlet extends HttpServlet {
         int userId = (Integer) session.getAttribute("userid");
 
         StringBuilder builder = new StringBuilder();
-
         String line;
-
         JSONObject jsonObject;
 
         try {
@@ -55,11 +49,9 @@ public class OrderApiServlet extends HttpServlet {
         int quantity = jsonObject.getInt("quantity");
         BigDecimal total = jsonObject.getBigDecimal("total");
         String StringStatus = jsonObject.getString("status");
-
         OrderDTO order = new OrderDTO(userId, quantity, total, StringStatus);
 
         orderDaoJdbc.checkOutOrder(order);
-
         service.updateOrderId(order.getId(), userId);
 
     }

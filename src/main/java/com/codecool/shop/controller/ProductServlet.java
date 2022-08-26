@@ -20,29 +20,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(urlPatterns = {"/"})
-public class ProductController extends HttpServlet {
-    private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
+public class ProductServlet extends HttpServlet {
+    private static final Logger logger = LoggerFactory.getLogger(ProductServlet.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
 
         LoadService load = LoadService.getInstance(logger);
 
-
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
 
         List<ProductDTO> productDTOs = new ArrayList<>();
+        List<ProductCategory> categories = load.getCategories();
+        List<Product> products = load.getAllProducts();
+        List<Supplier> suppliers = load.getAllSuppliers();
 
         HttpSession session = req.getSession(false);
         if (session != null) {
             int userid = (Integer) session.getAttribute("userid");
             productDTOs = load.getAllProductDTOsByUser(userid);
         }
-
-        List<ProductCategory> categories = load.getCategories();
-        List<Product> products = load.getAllProducts();
-        List<Supplier> suppliers = load.getAllSuppliers();
 
         context.setVariable("categories", categories);
         context.setVariable("products", products);
@@ -53,6 +51,7 @@ public class ProductController extends HttpServlet {
             engine.process("product/index.html", context, resp.getWriter());
         } catch (IOException e) {
             logger.error("Error by attempting to write servlet response {} ", resp, new Throwable(e));
+            throw new RuntimeException(e);
         }
     }
 }

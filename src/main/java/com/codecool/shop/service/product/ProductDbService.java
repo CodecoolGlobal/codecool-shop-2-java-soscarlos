@@ -12,10 +12,10 @@ import java.util.List;
 import java.util.Optional;
 
 public class ProductDbService implements ProductService {
-    private ProductDao productDaoJdbc;
-    private ProductCategoryDao productCategoryDaoJdbc;
-    private SupplierDao supplierDaoJdbc;
-    private CartDao cartDao;
+    private final ProductDao productDaoJdbc;
+    private final ProductCategoryDao productCategoryDaoJdbc;
+    private final SupplierDao supplierDaoJdbc;
+    private final CartDao cartDao;
 
     public ProductDbService(ProductDao productDao, ProductCategoryDao productCategoryDao, SupplierDao supplierDao, CartDao cartDao) {
         this.productDaoJdbc = productDao;

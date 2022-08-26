@@ -42,7 +42,6 @@ public class RegistrationService {
                 userId = user.getId();
             }
         }
-
         return userId;
     }
     public static String getNameFromUserEmail(String email) {
@@ -52,7 +51,6 @@ public class RegistrationService {
                 name = user.getName();
             }
         }
-
         return name;
     }
 }

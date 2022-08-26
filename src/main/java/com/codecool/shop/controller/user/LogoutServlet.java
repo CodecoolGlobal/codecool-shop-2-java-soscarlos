@@ -17,10 +17,10 @@ public class LogoutServlet  extends javax.servlet.http.HttpServlet{
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
         try {
             req.getSession(false).invalidate();
-            System.out.println(req.getSession(false));
             resp.sendRedirect("/login");
         } catch (IOException e) {
             logger.error("Error by trying to write servlet response", new Throwable(e));
+            throw new RuntimeException(e);
         }
     }
 }

@@ -2,9 +2,6 @@ package com.codecool.shop.controller.user;
 
 import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.controller.api.ServletService;
-import com.codecool.shop.dao.jdbc.ShopDataManager;
-import com.codecool.shop.dao.jdbc.UserDaoJdbc;
-import com.codecool.shop.model.user.User;
 import com.codecool.shop.service.RegistrationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,9 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.sql.DataSource;
 import java.io.IOException;
-import java.util.List;
 
 
 @WebServlet(urlPatterns = {"/login"})
@@ -32,6 +27,7 @@ public class LoginServlet extends javax.servlet.http.HttpServlet {
             engine.process("user/login.html", context, resp.getWriter());
         } catch (IOException e) {
             logger.error("Error by trying to write servlet response", new Throwable(e));
+            throw new RuntimeException(e);
         }
     }
 

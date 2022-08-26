@@ -21,7 +21,7 @@ VALUES (1, 1, 'Amazon Fire',
         49.9, 'EUR');
 INSERT INTO product (category_id, supplier_id, name, description, defaultprice, currency)
 VALUES (1, 2, 'Lenovo IdeaPad Miix 700',
-        'Keyboard cover is included. Fanless Core m5 processor. Full-size USB ports. Adjustable kickstand.',
+        'Keyboard cover is included. Fan-less Core m5 processor. Full-size USB ports. Adjustable kickstand.',
         479, 'EUR');
 INSERT INTO product (category_id, supplier_id, name, description, defaultprice, currency)
 VALUES (1, 1, 'Amazon Fire HD 8',
@@ -49,7 +49,7 @@ VALUES (3, 3, 'Macbook Air 2020',
         2000, 'EUR');
 INSERT INTO product (category_id, supplier_id, name, description, defaultprice, currency)
 VALUES (3, 3, 'Macbook Pro 2019',
-        'The 13-inch MacBook Pro is Apple''s best ultraportable laptop, thanks to stylish looks, an excellent touchpad, and long battery life.',
+        'The 13-inch MacBook Pro is Apple''s best ultra-portable laptop, thanks to stylish looks, an excellent touchpad, and long battery life.',
         1400, 'EUR');
 INSERT INTO product (category_id, supplier_id, name, description, defaultprice, currency)
 VALUES (3, 3, 'Macbook 2015',

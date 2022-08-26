@@ -3,9 +3,9 @@ package com.codecool.shop.model.dto;
 public class ProductDTO {
     private final String id;
     private String name;
-    private String defaultPrice;
+    private final String defaultPrice;
     private String description;
-    private String productCategory;
+    private final String productCategory;
     private String supplier;
     private String userId;
 
@@ -34,24 +34,12 @@ public class ProductDTO {
         return defaultPrice;
     }
 
-    public void setDefaultPrice(String defaultPrice) {
-        this.defaultPrice = defaultPrice;
-    }
-
     public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getProductCategory() {
-        return productCategory;
-    }
-
-    public void setProductCategory(String productCategory) {
-        this.productCategory = productCategory;
     }
 
     public String getSupplier() {
@@ -68,5 +56,9 @@ public class ProductDTO {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getProductCategory() {
+        return productCategory;
     }
 }

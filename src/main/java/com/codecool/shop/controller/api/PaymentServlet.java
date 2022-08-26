@@ -2,7 +2,6 @@ package com.codecool.shop.controller.api;
 
 import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.controller.LoadService;
-import com.codecool.shop.dao.implementation.CartDaoMem;
 import com.codecool.shop.model.dto.ProductDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

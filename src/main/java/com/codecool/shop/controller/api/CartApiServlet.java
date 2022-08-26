@@ -21,13 +21,11 @@ public class CartApiServlet extends javax.servlet.http.HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) {
         String query = request.getQueryString();
-
         Product productForCart;
-
         LoadService load = LoadService.getInstance(logger);
 
         HttpSession session = request.getSession(false);
-        int userId = (Integer) session.getAttribute("userid");
+        int userId = session != null ? (Integer) session.getAttribute("userid") : 0;
 
         if (query == null) {
             List<ProductDTO> productsDTO = load.getAllProductDTOsByUser(userId);

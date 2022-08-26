@@ -14,14 +14,13 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
-import java.util.Optional;
 
 public class ServletService {
 
     private static final Logger logger = LoggerFactory.getLogger(ServletService.class);
     private final ProductDTOService productDTOService = new ProductDTOService();
 
-    private ProductService productService;
+    private final ProductService productService;
 
     public ServletService() {
         LoadService load = LoadService.getInstance(logger);
@@ -40,20 +39,16 @@ public class ServletService {
         return productService.getProductById(id);
     }
 
-    public void addToCartByDao(ProductDTO productDTO){
+    public void addToCartByDao(ProductDTO productDTO) {
         productService.addToCart(productDTO);
     }
 
-    public void removeFromCartByDao(ProductDTO productDTO){
+    public void removeFromCartByDao(ProductDTO productDTO) {
         productService.removeFromCart(productDTO);
     }
 
-    public void updateOrderId(int orderId, int userId){
+    public void updateOrderId(int orderId, int userId) {
         productService.updateOrderId(orderId, userId);
-    }
-
-    public Optional<ProductDTO> getProductDTOByIdByDao(String id){
-        return productService.getProductDTOById(id);
     }
 
     public List<ProductDTO> getProductsDto(List<Product> products) {

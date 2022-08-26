@@ -2,7 +2,6 @@ package com.codecool.shop.controller.api;
 
 import com.codecool.shop.model.dto.ProductDTO;
 import com.codecool.shop.model.product.Product;
-import com.codecool.shop.service.product.ProductMemService;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;

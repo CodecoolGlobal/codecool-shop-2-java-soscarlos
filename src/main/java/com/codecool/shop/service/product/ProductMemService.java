@@ -12,11 +12,11 @@ import java.util.List;
 import java.util.Optional;
 
 public class ProductMemService implements ProductService {
-    private ProductDao productDao;
-    private ProductCategoryDao productCategoryDao;
-    private SupplierDao supplierDao;
+    private final ProductDao productDao;
+    private final ProductCategoryDao productCategoryDao;
+    private final SupplierDao supplierDao;
 
-    private CartDao cartDao;
+    private final CartDao cartDao;
 
     public ProductMemService(ProductDao productDao, ProductCategoryDao productCategoryDao, SupplierDao supplierDao, CartDao cartDao) {
         this.productDao = productDao;

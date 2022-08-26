@@ -62,14 +62,16 @@ public class LoadService {
 
     public ProductService getProductService() {
         ProductService service = null;
+
         if (dao.equals(memory)) {
             ProductDao productDataStore = ProductDaoMem.getInstance();
             ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
             SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
             CartDao cartDaoMem = CartDaoMem.getInstance();
             service = new ProductMemService(productDataStore, productCategoryDataStore, supplierDataStore, cartDaoMem);
+
         } else if (dao.equals(jdbc)) {
-            System.out.println("Load from db");
+
             ShopDataManager dbManager = ShopDataManager.getInstance();
             DataSource dataSource = dbManager.connect();
             ProductDaoJdbc productDaoJdbc = ProductDaoJdbc.getInstance(dataSource);
@@ -133,24 +135,6 @@ public class LoadService {
 
         }
         return suppliers;
-    }
-
-    public List<ProductDTO> getAllProductDTOs() {
-        List<ProductDTO> productDTOS = null;
-        if (dao.equals(memory)) {
-            CartDaoMem cartDaoMem = CartDaoMem.getInstance();
-
-            productDTOS = cartDaoMem.getProductsDTO();
-
-        } else if (dao.equals(jdbc)) {
-            ShopDataManager dbManager = ShopDataManager.getInstance();
-            DataSource dataSource = dbManager.connect();
-            CartDaoJdbc cartDaoJdbc = CartDaoJdbc.getInstance(dataSource);
-
-            productDTOS = cartDaoJdbc.getProductsDTO();
-
-        }
-        return productDTOS;
     }
 
     public List<ProductDTO> getAllProductDTOsByUser(int userId) {

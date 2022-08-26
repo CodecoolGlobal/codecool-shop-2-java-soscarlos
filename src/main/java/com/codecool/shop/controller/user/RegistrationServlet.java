@@ -32,6 +32,7 @@ public class RegistrationServlet extends javax.servlet.http.HttpServlet {
             engine.process("user/register.html", context, resp.getWriter());
         } catch (IOException e) {
             logger.error("Error by trying to write servlet response", new Throwable(e));
+            throw new RuntimeException(e);
         }
     }
 
